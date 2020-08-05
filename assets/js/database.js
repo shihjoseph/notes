@@ -100,7 +100,7 @@ window.database = {
     "": {
       "title": "Home - Hello World!",
       "category": "",
-      "content": "# Notes From a Full-Stack Developer## WelcomeThis site is a collection of notes gathered over the years of building frontend and backend applications. Much of these commands or snippets are simple, straightforward, and sometimes often forgotten.Use the search bar for instant search.Many notes have yet to be added and will be added from time to time.",
+      "content": "# Programming, Commands, and Technical Notes## From a Full-Stack DeveloperThis site is a collection of notes gathered over the years of building frontend and backend applications. Much of these commands or snippets are simple, straightforward, and sometimes often forgotten.Use the search bar for instant search.Many notes have yet to be added and will be added from time to time.",
       "url": "/",
       "href": "/"
     }
