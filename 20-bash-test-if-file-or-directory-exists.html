@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bash - Test if File or Directory Exists</title>
+  <meta name="description" content="Documentation for small projects">
+
+	<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://github.com/alexander-heimbuch/millidocs/20-bash-test-if-file-or-directory-exists.html">
+
+	<link rel="stylesheet" href="/assets/css/docs.css">
+
+</head>
+
+	<body>
+		<div class="wrapper">
+			<sidebar class="sidebar" id="sidebar">
+	<div class="sidebar-mobile">
+		<img src="/assets/images/menu.svg" class="menu-icon" id="menu" />
+		<img src="/assets/images/close.svg" class="close-icon" id="close" />
+	</div>
+	<div class="search">
+	<input type="text" class="search-input" id="search-input" placeholder="Type to search" />
+</div>
+
+	<div class="sidebar-main">
+		<ul class="navigation" id="navigation">																<li>				<a class="" href="/">					Home - Hello World!				</a>			</li>								<li>				<a class="" href="/10-js-copy.html">					JavaScript - Copy Text in Browser				</a>			</li>								<li>				<a class="" href="/10-js-download.html">					JavaScript - Download Frontend File Without Server				</a>			</li>								<li>				<a class="" href="/20-bash-date.html">					Bash - Date and Timestamps				</a>			</li>								<li>				<a class="" href="/20-bash-here-docs.html">					Bash - Heredocs				</a>			</li>								<li>				<a class="" href="/20-bash-mount.html">					Bash - Mount Disk and Drives				</a>			</li>								<li>				<a class="" href="/20-bash-rsync.html">					Bash - Rsync - Copy and Sync Files				</a>			</li>								<li>				<a class="active" href="/20-bash-test-if-file-or-directory-exists.html">					Bash - Test if File or Directory Exists				</a>			</li>								<li>				<a class="" href="/30-awscli-assume-role.html">					AWS CLI - Assume Role				</a>			</li>								<li>				<a class="" href="/30-awscli-docker-ecr-login.html">					AWS CLI - Login Docker Client into Amazon Elastic Container Registry (Amazon ECR)				</a>			</li>			</ul>
+
+		<ul id="search-results" class="navigation"></ul>
+
+	</div>
+</sidebar>
+
+			<main class="content">
+				<div class="inner">
+					<h1 id="test-if-file-or-directory-exists">Test if File or Directory Exists</h1>
+
+<p><a href="https://www.tldp.org/LDP/abs/html/fto.html">https://www.tldp.org/LDP/abs/html/fto.html</a></p>
+
+<p>Check if regular file exists:</p>
+
+<pre><code class="language-bash">if [ -f "/path/to/file" ]
+then
+  echo "Exists";
+fi
+</code></pre>
+
+<p>Check if file is a directory:</p>
+
+<pre><code class="language-bash">if [ -d "/path/to/dir" ]
+then
+  echo "Exists";
+fi
+</code></pre>
+
+
+				</div>
+			</main>
+		</div>
+		<script src="/assets/js/zepto.min.js"></script>
+<script src="/assets/js/lunar.min.js"></script>
+<script src="/assets/js/prism.min.js"></script>
+<script src="/assets/js/database.js"></script>
+<script src="/assets/js/search.js"></script>
+<script src="/assets/js/mobile-navigation.js"></script>
+
+	</body>
+</html>

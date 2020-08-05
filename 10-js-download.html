@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>JavaScript - Download Frontend File Without Server</title>
+  <meta name="description" content="Documentation for small projects">
+
+	<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://github.com/alexander-heimbuch/millidocs/10-js-download.html">
+
+	<link rel="stylesheet" href="/assets/css/docs.css">
+
+</head>
+
+	<body>
+		<div class="wrapper">
+			<sidebar class="sidebar" id="sidebar">
+	<div class="sidebar-mobile">
+		<img src="/assets/images/menu.svg" class="menu-icon" id="menu" />
+		<img src="/assets/images/close.svg" class="close-icon" id="close" />
+	</div>
+	<div class="search">
+	<input type="text" class="search-input" id="search-input" placeholder="Type to search" />
+</div>
+
+	<div class="sidebar-main">
+		<ul class="navigation" id="navigation">																<li>				<a class="" href="/">					Home - Hello World!				</a>			</li>								<li>				<a class="" href="/10-js-copy.html">					JavaScript - Copy Text in Browser				</a>			</li>								<li>				<a class="active" href="/10-js-download.html">					JavaScript - Download Frontend File Without Server				</a>			</li>								<li>				<a class="" href="/20-bash-date.html">					Bash - Date and Timestamps				</a>			</li>								<li>				<a class="" href="/20-bash-here-docs.html">					Bash - Heredocs				</a>			</li>								<li>				<a class="" href="/20-bash-mount.html">					Bash - Mount Disk and Drives				</a>			</li>								<li>				<a class="" href="/20-bash-rsync.html">					Bash - Rsync - Copy and Sync Files				</a>			</li>								<li>				<a class="" href="/20-bash-test-if-file-or-directory-exists.html">					Bash - Test if File or Directory Exists				</a>			</li>								<li>				<a class="" href="/30-awscli-assume-role.html">					AWS CLI - Assume Role				</a>			</li>								<li>				<a class="" href="/30-awscli-docker-ecr-login.html">					AWS CLI - Login Docker Client into Amazon Elastic Container Registry (Amazon ECR)				</a>			</li>			</ul>
+
+		<ul id="search-results" class="navigation"></ul>
+
+	</div>
+</sidebar>
+
+			<main class="content">
+				<div class="inner">
+					<h1 id="bash---javascript---download-frontend-file-without-server">Bash - JavaScript - Download Frontend File Without Server</h1>
+
+<p>Sometimes you have string in the browser web page you want to download. You can make the string downloadable.</p>
+
+<pre><code class="language-javascript">var makeDownload = function(val, filename, contentType) {
+    if (!val || !filename || !contentType)
+    {
+        return;
+    }
+    var a = window.document.createElement('a');
+    a.href = window.URL.createObjectURL(new Blob([val], {type: contentType}));
+    a.download = filename;
+    
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+};
+
+$("#export_csv").on("click", function(e) {
+    makeDownload(arr.join("\n"), "bulk-url-shortener.csv", "text/csv");
+});
+</code></pre>
+
+
+				</div>
+			</main>
+		</div>
+		<script src="/assets/js/zepto.min.js"></script>
+<script src="/assets/js/lunar.min.js"></script>
+<script src="/assets/js/prism.min.js"></script>
+<script src="/assets/js/database.js"></script>
+<script src="/assets/js/search.js"></script>
+<script src="/assets/js/mobile-navigation.js"></script>
+
+	</body>
+</html>

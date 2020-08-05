@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bash - Rsync - Copy and Sync Files</title>
+  <meta name="description" content="Documentation for small projects">
+
+	<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://github.com/alexander-heimbuch/millidocs/20-bash-rsync.html">
+
+	<link rel="stylesheet" href="/assets/css/docs.css">
+
+</head>
+
+	<body>
+		<div class="wrapper">
+			<sidebar class="sidebar" id="sidebar">
+	<div class="sidebar-mobile">
+		<img src="/assets/images/menu.svg" class="menu-icon" id="menu" />
+		<img src="/assets/images/close.svg" class="close-icon" id="close" />
+	</div>
+	<div class="search">
+	<input type="text" class="search-input" id="search-input" placeholder="Type to search" />
+</div>
+
+	<div class="sidebar-main">
+		<ul class="navigation" id="navigation">																<li>				<a class="" href="/">					Home - Hello World!				</a>			</li>								<li>				<a class="" href="/10-js-copy.html">					JavaScript - Copy Text in Browser				</a>			</li>								<li>				<a class="" href="/10-js-download.html">					JavaScript - Download Frontend File Without Server				</a>			</li>								<li>				<a class="" href="/20-bash-date.html">					Bash - Date and Timestamps				</a>			</li>								<li>				<a class="" href="/20-bash-here-docs.html">					Bash - Heredocs				</a>			</li>								<li>				<a class="" href="/20-bash-mount.html">					Bash - Mount Disk and Drives				</a>			</li>								<li>				<a class="active" href="/20-bash-rsync.html">					Bash - Rsync - Copy and Sync Files				</a>			</li>								<li>				<a class="" href="/20-bash-test-if-file-or-directory-exists.html">					Bash - Test if File or Directory Exists				</a>			</li>								<li>				<a class="" href="/30-awscli-assume-role.html">					AWS CLI - Assume Role				</a>			</li>								<li>				<a class="" href="/30-awscli-docker-ecr-login.html">					AWS CLI - Login Docker Client into Amazon Elastic Container Registry (Amazon ECR)				</a>			</li>			</ul>
+
+		<ul id="search-results" class="navigation"></ul>
+
+	</div>
+</sidebar>
+
+			<main class="content">
+				<div class="inner">
+					<h1 id="bash---rsync---copy-and-sync-files">Bash - Rsync - Copy and Sync Files</h1>
+
+<h2 id="copy">Copy</h2>
+
+<pre><code class="language-bash">rsync -az $source $target
+</code></pre>
+
+<p>Copy over SSH:</p>
+<pre><code class="language-bash">rsync -az $source ubuntu@1.1.1.1:$target
+</code></pre>
+
+<h2 id="trailing-slash-or-not">Trailing slash or not</h2>
+
+<p>Trailing slash on destination directory has no effect</p>
+
+<p>Copy “hello.txt” file inside “bar” directory resulting in “bar/hello.txt”:</p>
+<pre><code class="language-bash">rsync -az hello.txt bar
+</code></pre>
+
+<p>Copy “foo” directory inside “bar” directory resulting in “bar/foo”:</p>
+<pre><code class="language-bash">rsync -az foo bar
+</code></pre>
+
+<p>Copy files of “foo/*” directory inside “bar” directory resulting in “bar/*”:</p>
+<pre><code class="language-bash">rsync -az foo/ bar
+</code></pre>
+
+<h2 id="sync">Sync</h2>
+
+<p>Remove files in destination not in source:</p>
+<pre><code class="language-bash">rsync -az --delete foo/ bar
+</code></pre>
+
+<h2 id="exclude-files">Exclude files</h2>
+<pre><code class="language-bash">rsync -az --delete \
+  --exclude ".git" \
+  --exclude ".gitignore" \
+  foo/ \
+  bar
+</code></pre>
+
+
+				</div>
+			</main>
+		</div>
+		<script src="/assets/js/zepto.min.js"></script>
+<script src="/assets/js/lunar.min.js"></script>
+<script src="/assets/js/prism.min.js"></script>
+<script src="/assets/js/database.js"></script>
+<script src="/assets/js/search.js"></script>
+<script src="/assets/js/mobile-navigation.js"></script>
+
+	</body>
+</html>
