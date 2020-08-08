@@ -52,7 +52,12 @@
 				<div class="inner">
 					<h1 id="bash---boot-script---run-script-on-reboot">Bash - Boot Script - Run Script on Reboot</h1>
 
-<p><code>sudo vim /etc/crontab</code></p>
+<p>Edit to <code>/etc/crontab</code> file.</p>
+
+<pre><code class="language-bash">sudo vim /etc/crontab
+</code></pre>
+
+<p>Add <code>@reboot</code> followed by the user to run and the script.</p>
 
 <pre><code class="language-crontab">@reboot ubuntu /home/ubuntu/my_script.sh
 </code></pre>

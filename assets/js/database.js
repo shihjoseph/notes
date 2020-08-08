@@ -24,7 +24,7 @@ window.database = {
     "20-bash-boot-script-html": {
       "title": "Bash - Boot Script - Run Script on Reboot",
       "category": "",
-      "content": "Bash - Boot Script - Run Script on Rebootsudo vim /etc/crontab@reboot ubuntu /home/ubuntu/my_script.sh",
+      "content": "Bash - Boot Script - Run Script on RebootEdit to /etc/crontab file.sudo vim /etc/crontabAdd @reboot followed by the user to run and the script.@reboot ubuntu /home/ubuntu/my_script.sh",
       "url": "/20-bash-boot-script.html",
       "href": "/20-bash-boot-script.html"
     }
