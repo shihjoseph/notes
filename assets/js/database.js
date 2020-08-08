@@ -21,6 +21,16 @@ window.database = {
     ,
   
     
+    "20-bash-boot-script-html": {
+      "title": "Bash - Boot Script - Run Script on Reboot",
+      "category": "",
+      "content": "Bash - Boot Script - Run Script on Rebootsudo vim /etc/crontab@reboot ubuntu /home/ubuntu/my_script.sh",
+      "url": "/20-bash-boot-script.html",
+      "href": "/20-bash-boot-script.html"
+    }
+    ,
+  
+    
     "20-bash-checksum-html": {
       "title": "Bash - Checksum (SHA, MD5)",
       "category": "",
