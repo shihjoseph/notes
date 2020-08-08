@@ -5,11 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Bash - Heredocs</title>
+  <title>Bash - Generate SSH Public Key from Private Key</title>
   <meta name="description" content="Documentation for small projects">
 
 	<link rel="icon" href="/assets/images/favicon.ico">
-  <link rel="canonical" href="https://github.com/alexander-heimbuch/millidocs/20-bash-here-docs.html">
+  <link rel="canonical" href="https://github.com/alexander-heimbuch/millidocs/20-bash-ssh-generate-public-key.html">
 
 	<link rel="stylesheet" href="/assets/css/docs.css">
 
@@ -41,7 +41,7 @@
 </div>
 
 	<div class="sidebar-main">
-		<ul class="navigation" id="navigation">																<li>				<a class="" href="/">					Home - Hello World!				</a>			</li>								<li>				<a class="" href="/10-js-copy.html">					JavaScript - Copy Text in Browser				</a>			</li>								<li>				<a class="" href="/10-js-download.html">					JavaScript - Download Frontend File Without Server				</a>			</li>								<li>				<a class="" href="/20-bash-checksum.html">					Bash - Checksum (SHA, MD5)				</a>			</li>								<li>				<a class="" href="/20-bash-compress-tar.html">					Bash - Tar and Un-tar (.tar.gz or .tgz)				</a>			</li>								<li>				<a class="" href="/20-bash-date.html">					Bash - Date and Timestamps				</a>			</li>								<li>				<a class="active" href="/20-bash-here-docs.html">					Bash - Heredocs				</a>			</li>								<li>				<a class="" href="/20-bash-mount.html">					Bash - Mount Disk and Drives				</a>			</li>								<li>				<a class="" href="/20-bash-rsync.html">					Bash - Rsync - Copy and Sync Files				</a>			</li>								<li>				<a class="" href="/20-bash-ssh-generate-public-key.html">					Bash - Generate SSH Public Key from Private Key				</a>			</li>								<li>				<a class="" href="/20-bash-test-if-file-or-directory-exists.html">					Bash - Test if File or Directory Exists				</a>			</li>								<li>				<a class="" href="/30-awscli-assume-role.html">					AWS CLI - Assume Role				</a>			</li>								<li>				<a class="" href="/30-awscli-docker-ecr-login.html">					AWS CLI - Login Docker Client into Amazon Elastic Container Registry (Amazon ECR)				</a>			</li>			</ul>
+		<ul class="navigation" id="navigation">																<li>				<a class="" href="/">					Home - Hello World!				</a>			</li>								<li>				<a class="" href="/10-js-copy.html">					JavaScript - Copy Text in Browser				</a>			</li>								<li>				<a class="" href="/10-js-download.html">					JavaScript - Download Frontend File Without Server				</a>			</li>								<li>				<a class="" href="/20-bash-checksum.html">					Bash - Checksum (SHA, MD5)				</a>			</li>								<li>				<a class="" href="/20-bash-compress-tar.html">					Bash - Tar and Un-tar (.tar.gz or .tgz)				</a>			</li>								<li>				<a class="" href="/20-bash-date.html">					Bash - Date and Timestamps				</a>			</li>								<li>				<a class="" href="/20-bash-here-docs.html">					Bash - Heredocs				</a>			</li>								<li>				<a class="" href="/20-bash-mount.html">					Bash - Mount Disk and Drives				</a>			</li>								<li>				<a class="" href="/20-bash-rsync.html">					Bash - Rsync - Copy and Sync Files				</a>			</li>								<li>				<a class="active" href="/20-bash-ssh-generate-public-key.html">					Bash - Generate SSH Public Key from Private Key				</a>			</li>								<li>				<a class="" href="/20-bash-test-if-file-or-directory-exists.html">					Bash - Test if File or Directory Exists				</a>			</li>								<li>				<a class="" href="/30-awscli-assume-role.html">					AWS CLI - Assume Role				</a>			</li>								<li>				<a class="" href="/30-awscli-docker-ecr-login.html">					AWS CLI - Login Docker Client into Amazon Elastic Container Registry (Amazon ECR)				</a>			</li>			</ul>
 
 		<ul id="search-results" class="navigation"></ul>
 
@@ -50,13 +50,9 @@
 
 			<main class="content">
 				<div class="inner">
-					<h1 id="bash---heredocs">Bash - Heredocs</h1>
+					<h1 id="bash---generate-ssh-public-key-from-private-key">Bash - Generate SSH Public Key from Private Key</h1>
 
-<p><a href="https://tldp.org/LDP/abs/html/here-docs.html">https://tldp.org/LDP/abs/html/here-docs.html</a></p>
-
-<pre><code class="language-bash">cat &gt; hello.txt &lt;&lt; EOF
-Hello World
-EOF
+<pre><code class="language-bash">ssh-keygen -y -f ~/.ssh/id_rsa
 </code></pre>
 
 

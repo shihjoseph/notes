@@ -21,6 +21,26 @@ window.database = {
     ,
   
     
+    "20-bash-checksum-html": {
+      "title": "Bash - Checksum (SHA, MD5)",
+      "category": "",
+      "content": "Bash - Checksum (SHA, MD5)SHA Checksumsshasum text.txtorecho -n \"Hello world!\" | shasumMD5 Checksumsmd5sum text.txtorecho -n \"Hello world!\" | md5sum",
+      "url": "/20-bash-checksum.html",
+      "href": "/20-bash-checksum.html"
+    }
+    ,
+  
+    
+    "20-bash-compress-tar-html": {
+      "title": "Bash - Tar and Un-tar (.tar.gz or .tgz)",
+      "category": "",
+      "content": "Bash - Tar and Un-tar (.tar.gz or .tgz)CompressEntire Directory or a Single Filetar -czvf name-of-archive.tar.gz /path/to/directory-or-file-c Create an archive.-z Compress the archive with gzip.-v Verbose-f Specify the filename of the archive.Un-compress / De-compress / Extract an ArchiveThe following command will extract the contents of archive.tar.gz to the current directory.tar -xzvf archive.tar.gz-x This specifies you want to extract an archive instead of create one.tar -xzvf archive.tar.gz -C /tmp-C Extract to specific directory",
+      "url": "/20-bash-compress-tar.html",
+      "href": "/20-bash-compress-tar.html"
+    }
+    ,
+  
+    
     "20-bash-date-html": {
       "title": "Bash - Date and Timestamps",
       "category": "",
@@ -57,6 +77,16 @@ window.database = {
       "content": "Bash - Rsync - Copy and Sync FilesCopyrsync -az $source $targetCopy over SSH:rsync -az $source ubuntu@1.1.1.1:$targetTrailing slash or notTrailing slash on destination directory has no effectCopy “hello.txt” file inside “bar” directory resulting in “bar/hello.txt”:rsync -az hello.txt barCopy “foo” directory inside “bar” directory resulting in “bar/foo”:rsync -az foo barCopy files of “foo/*” directory inside “bar” directory resulting in “bar/*”:rsync -az foo/ barSyncRemove files in destination not in source:rsync -az --delete foo/ barExclude filesrsync -az --delete \\  --exclude \".git\" \\  --exclude \".gitignore\" \\  foo/ \\  bar",
       "url": "/20-bash-rsync.html",
       "href": "/20-bash-rsync.html"
+    }
+    ,
+  
+    
+    "20-bash-ssh-generate-public-key-html": {
+      "title": "Bash - Generate SSH Public Key from Private Key",
+      "category": "",
+      "content": "Bash - Generate SSH Public Key from Private Keyssh-keygen -y -f ~/.ssh/id_rsa",
+      "url": "/20-bash-ssh-generate-public-key.html",
+      "href": "/20-bash-ssh-generate-public-key.html"
     }
     ,
   
