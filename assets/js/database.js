@@ -81,6 +81,16 @@ window.database = {
     ,
   
     
+    "20-bash-service-auto-start-on-reboot-html": {
+      "title": "Bash - Service - Auto-Start on Reboot",
+      "category": "",
+      "content": "Bash - Service - Auto-Start on RebootCheck if Service is RunningFor example, apache2 and httpd.sudo systemctl status apache2Check if Service is Auto-Started on Rebootsudo systemctl is-enabled apache2Enable Auto-Start of Service on Rebootsudo systemctl enable apache2Disable Auto-Start of Service on Rebootsudo systemctl disable apache2",
+      "url": "/20-bash-service-auto-start-on-reboot.html",
+      "href": "/20-bash-service-auto-start-on-reboot.html"
+    }
+    ,
+  
+    
     "20-bash-ssh-generate-public-key-html": {
       "title": "Bash - Generate SSH Public Key from Private Key",
       "category": "",
