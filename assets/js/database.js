@@ -34,7 +34,7 @@ window.database = {
     "20-bash-checksum-html": {
       "title": "Bash - Checksum (SHA, MD5)",
       "category": "",
-      "content": "Bash - Checksum (SHA, MD5)SHA Checksumsshasum text.txtorecho -n \"Hello world!\" | shasumMD5 Checksumsmd5sum text.txtorecho -n \"Hello world!\" | md5sum",
+      "content": "Bash - Checksums (SHA, MD5)SHA Checksumsshasum text.txtorecho -n \"Hello world!\" | shasumMD5 Checksumsmd5sum text.txtorecho -n \"Hello world!\" | md5sum",
       "url": "/20-bash-checksum.html",
       "href": "/20-bash-checksum.html"
     }
