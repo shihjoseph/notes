@@ -22,9 +22,9 @@ window.database = {
   
     
     "20-bash-boot-script-html": {
-      "title": "Bash - Boot Script - Run Script on Reboot (Auto Restart)",
+      "title": "Bash - Boot Script - Run Script on Reboot - Auto Restart",
       "category": "",
-      "content": "Bash - Boot Script - Run Script on Reboot (Auto Restart)Edit to /etc/crontab file.sudo vim /etc/crontabAdd @reboot followed by the user to run and the script.@reboot ubuntu /home/ubuntu/my_script.sh",
+      "content": "Bash - Boot Script - Run Script on Reboot - Auto RestartEdit to /etc/crontab file.sudo vim /etc/crontabAdd @reboot followed by the user to run and the script.@reboot ubuntu /home/ubuntu/my_script.sh",
       "url": "/20-bash-boot-script.html",
       "href": "/20-bash-boot-script.html"
     }
