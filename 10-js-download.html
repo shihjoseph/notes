@@ -67,9 +67,21 @@
     a.click();
     document.body.removeChild(a);
 };
+</code></pre>
 
-$("#export_csv").on("click", function(e) {
-    makeDownload(arr.join("\n"), "bulk-url-shortener.csv", "text/csv");
+<p>To call the function, pass in the data to download, filename, and content type.</p>
+
+<pre><code class="language-javascript">makeDownload(
+    "First name,Last name,Email\nJohn,Doe,john@example.com\nJane,Doe,jane@example.com",
+    "filename.csv",
+    "text/csv"
+);
+</code></pre>
+
+<p>Here is an example adding a listener to buttons.</p>
+
+<pre><code class="language-javascript">document.querySelector$("input[type=\"button\"].download").addEventListener("click", function(e) {
+    makeDownload(this.getAttribute("data-content"), "filename.csv", "text/csv");
 });
 </code></pre>
 
