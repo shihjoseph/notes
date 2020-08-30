@@ -80,7 +80,10 @@
 
 <p>Here is an example adding a listener to buttons.</p>
 
-<pre><code class="language-javascript">document.querySelector$("input[type=\"button\"].download").addEventListener("click", function(e) {
+<pre><code class="language-html">&lt;input type="button" class="download" data-content="Hello World!" value="Download" /&gt;
+</code></pre>
+
+<pre><code class="language-javascript">document.querySelector("input[type=\"button\"].download").addEventListener("click", function(e) {
     makeDownload(this.getAttribute("data-content"), "filename.csv", "text/csv");
 });
 </code></pre>
