@@ -100,5 +100,15 @@ export AWS_SESSION_TOKEN=&lt;session-token&gt;;
 <script src="/assets/js/search.js"></script>
 <script src="/assets/js/mobile-navigation.js"></script>
 
+		
+		<script>
+			(function(){
+				var el_search = document.getElementById("search-input");
+				if (!el_search) {
+					return;
+				}
+				el_search.focus();
+			})();
+		</script>
 	</body>
 </html>
