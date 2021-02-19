@@ -84,7 +84,8 @@ repo_name=my-repo-name;
 <pre><code class="language-bash">aws ecr --region ${region} create-repository --repository-name ${repo_name}
 </code></pre>
 
-<h2 id="pull-image">Pull image:</h2>
+<h2 id="pull-image">Pull image</h2>
+
 <pre><code class="language-bash">sudo docker pull ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latest
 </code></pre>
 
@@ -102,6 +103,8 @@ repo_name=my-repo-name;
 <p>Push image to repository:</p>
 <pre><code class="language-bash">sudo docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latest
 </code></pre>
+
+<h2 id="clean-up">Clean up</h2>
 
 <p>Delete all images in repository and delete repository.</p>
 <pre><code class="language-bash"># Delete all images
