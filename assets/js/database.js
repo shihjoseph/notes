@@ -121,6 +121,16 @@ window.database = {
     ,
   
     
+    "20-bash-while-loop-html": {
+      "title": "Bash - Infinite While Loop",
+      "category": "",
+      "content": "While LoopInfinite:while :do\techo \"[CTRL+C] to break\"\tsleep 1done  One liner:while :; do echo \"[CTRL+C] to break\"; sleep 1; done",
+      "url": "/20-bash-while-loop.html",
+      "href": "/20-bash-while-loop.html"
+    }
+    ,
+  
+    
     "30-awscli-assume-role-html": {
       "title": "AWS CLI - Assume Role",
       "category": "",
