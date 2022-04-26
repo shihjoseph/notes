@@ -70,11 +70,19 @@ done
 <pre><code class="language-bash">ii=0;
 while :;
 do
-    ii=$(expr $ii + 1);
-    echo "[CTRL+C] to break... ${ii}"
-    sleep 1;
+  ii=$(expr $ii + 1);
+  echo "[CTRL+C] to break... ${ii}"
+  sleep 1;
 done;
 </code></pre>
+
+<p>Piping in text, one loop per line:</p>
+<pre><code class="language-bash">ls | while read -r LINE;
+do
+  echo $LINE;
+done;
+</code></pre>
+<p><em>Note: When pipe is is used, a subshell is used so values in parent shell will not be affected from within the loop</em></p>
 
 
 				</div>
