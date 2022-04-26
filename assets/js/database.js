@@ -124,7 +124,7 @@ window.database = {
     "20-bash-while-loop-html": {
       "title": "Bash - Infinite While Loop",
       "category": "",
-      "content": "Infinite While LoopInfinite while loop:while :do  echo \"[CTRL+C] to break\"  sleep 1doneOne liner:while :; do echo \"[CTRL+C] to break\"; sleep 1; done",
+      "content": "Infinite While LoopInfinite while loop:while :do  echo \"[CTRL+C] to break\"  sleep 1doneOne liner:while :; do echo \"[CTRL+C] to break\"; sleep 1; doneWith counter:ii=0;while :;do    ii=$(expr $ii + 1);    echo \"[CTRL+C] to break... ${ii}\"    sleep 1;done;",
       "url": "/20-bash-while-loop.html",
       "href": "/20-bash-while-loop.html"
     }

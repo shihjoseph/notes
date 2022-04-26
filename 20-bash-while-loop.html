@@ -66,6 +66,16 @@ done
 <pre><code class="language-bash">while :; do echo "[CTRL+C] to break"; sleep 1; done
 </code></pre>
 
+<p>With counter:</p>
+<pre><code class="language-bash">ii=0;
+while :;
+do
+    ii=$(expr $ii + 1);
+    echo "[CTRL+C] to break... ${ii}"
+    sleep 1;
+done;
+</code></pre>
+
 
 				</div>
 			</main>
