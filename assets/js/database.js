@@ -151,6 +151,16 @@ window.database = {
     ,
   
     
+    "40-cfn-ssm-ami-html": {
+      "title": "AWS CloudFormation - Use latest AMIs by dynamically referencing SSM Parameter Store in your CloudFromation templates",
+      "category": "",
+      "content": "Use latest AMIs by dynamically referencing SSM Parameter Store in your CloudFromation templatesCloudFormation templates with the following will select the latest AMI IDs directly from SSM Parameter store to deploy the instance.Adding inline in Resources of the templateResources:  Instance:     Type: AWS::EC2::Instance    Properties:      ImageId: ''Adding in Parameters of the templateParameters:  ImageId:     Type: 'AWS::SSM::Parameter::Value&lt;AWS::EC2::Image::Id&gt;'    Default: '/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id'    Resources:  Instance:     Type: 'AWS::EC2::Instance'    Properties:      ImageId: !Ref ImageId",
+      "url": "/40-cfn-ssm-ami.html",
+      "href": "/40-cfn-ssm-ami.html"
+    }
+    ,
+  
+    
       
     
       

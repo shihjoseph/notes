@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>AWS CloudFormation - Use latest AMIs by dynamically referencing SSM Parameter Store in your CloudFromation templates</title>
+  <meta name="description" content="Instead of hardcoding AMI IDs, SSM Paramter Store stores the latest AMI IDs that you can reference in your CloudFormation templates.">
+
+	<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://notes.josephshih.com/40-cfn-ssm-ami.html">
+
+	<link rel="stylesheet" href="/assets/css/docs.css">
+
+	
+	<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M6V5RVS');</script>
+  <!-- End Google Tag Manager -->
+  
+</head>
+
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6V5RVS"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		
+		<div class="wrapper">
+			<sidebar class="sidebar" id="sidebar">
+	<div class="sidebar-mobile">
+		<img src="/assets/images/menu.svg" class="menu-icon" id="menu" />
+		<img src="/assets/images/close.svg" class="close-icon" id="close" />
+	</div>
+	<div class="search">
+	<input type="text" class="search-input" id="search-input" placeholder="Type to search" />
+</div>
+
+	<div class="sidebar-main">
+		<ul class="navigation" id="navigation">																<li>				<a class="" href="/">					Home - Hello World!				</a>			</li>								<li>				<a class="" href="/10-js-copy.html">					JavaScript - Copy Text in Browser				</a>			</li>								<li>				<a class="" href="/10-js-download.html">					JavaScript - Download Frontend File Without Server				</a>			</li>								<li>				<a class="" href="/20-bash-boot-script.html">					Bash - Boot Script - Run Script on Reboot - Auto Restart				</a>			</li>								<li>				<a class="" href="/20-bash-checksum.html">					Bash - Checksum (SHA, MD5)				</a>			</li>								<li>				<a class="" href="/20-bash-compress-tar.html">					Bash - Tar and Un-tar (.tar.gz or .tgz)				</a>			</li>								<li>				<a class="" href="/20-bash-date.html">					Bash - Date and Timestamps				</a>			</li>								<li>				<a class="" href="/20-bash-here-docs.html">					Bash - Heredocs				</a>			</li>								<li>				<a class="" href="/20-bash-mount.html">					Bash - Mount Disk and Drives				</a>			</li>								<li>				<a class="" href="/20-bash-rsync.html">					Bash - Rsync - Copy and Sync Files				</a>			</li>								<li>				<a class="" href="/20-bash-service-auto-start-on-reboot.html">					Bash - Service - Auto-Start on Reboot				</a>			</li>								<li>				<a class="" href="/20-bash-ssh-generate-public-key.html">					Bash - Generate SSH Public Key from Private Key				</a>			</li>								<li>				<a class="" href="/20-bash-test-if-file-or-directory-exists.html">					Bash - Test if File or Directory Exists				</a>			</li>								<li>				<a class="" href="/20-bash-while-loop.html">					Bash - Infinite While Loop				</a>			</li>								<li>				<a class="" href="/30-awscli-assume-role.html">					AWS CLI - Assume Role				</a>			</li>								<li>				<a class="" href="/30-awscli-docker-ecr-login.html">					AWS CLI - Login Docker Client into Amazon Elastic Container Registry (Amazon ECR)				</a>			</li>								<li>				<a class="active" href="/40-cfn-ssm-ami.html">					AWS CloudFormation - Use latest AMIs by dynamically referencing SSM Parameter Store in your CloudFromation templates				</a>			</li>			</ul>
+
+		<ul id="search-results" class="navigation"></ul>
+
+	</div>
+</sidebar>
+
+			<main class="content">
+				<div class="inner">
+					<h1 id="use-latest-amis-by-dynamically-referencing-ssm-parameter-store-in-your-cloudfromation-templates">Use latest AMIs by dynamically referencing SSM Parameter Store in your CloudFromation templates</h1>
+
+<p>CloudFormation templates with the following will select the latest AMI IDs directly from SSM Parameter store to deploy the instance.</p>
+
+<h2 id="adding-inline-in-resources-of-the-template">Adding inline in <code>Resources</code> of the template</h2>
+
+<pre><code class="language-yaml">Resources:
+  Instance: 
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ''
+</code></pre>
+
+<h2 id="adding-in-parameters-of-the-template">Adding in <code>Parameters</code> of the template</h2>
+
+<pre><code class="language-yaml">Parameters:
+  ImageId: 
+    Type: 'AWS::SSM::Parameter::Value&lt;AWS::EC2::Image::Id&gt;'
+    Default: '/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id'
+    Resources:
+  Instance: 
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref ImageId
+</code></pre>
+
+
+				</div>
+			</main>
+		</div>
+		<script src="/assets/js/zepto.min.js"></script>
+<script src="/assets/js/lunar.min.js"></script>
+<script src="/assets/js/prism.min.js"></script>
+<script src="/assets/js/database.js"></script>
+<script src="/assets/js/search.js"></script>
+<script src="/assets/js/mobile-navigation.js"></script>
+
+		
+		<script>
+			(function(){
+				var el_search = document.getElementById("search-input");
+				if (!el_search) {
+					return;
+				}
+				el_search.focus();
+			})();
+		</script>
+	</body>
+</html>
