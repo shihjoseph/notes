@@ -55,8 +55,7 @@
 <p>Sometimes you have string in the browser web page you want to download. You can make the string downloadable.</p>
 
 <pre><code class="language-javascript">var makeDownload = function(val, filename, contentType) {
-    if (!val || !filename || !contentType)
-    {
+    if (!val || !filename || !contentType) {
         return;
     }
     var a = window.document.createElement('a');
