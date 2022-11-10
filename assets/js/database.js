@@ -71,6 +71,16 @@ window.database = {
     ,
   
     
+    "20-bash-kubernetes-install-html": {
+      "title": "Bash - Install helm, kubectl, and eksctl if not already installed",
+      "category": "",
+      "content": "Bash - Install helm, kubectl, and eksctl if not already installedInstall common command-lind tools to interact with Kubernetes clusters and Amazon EKS if the environment doesn’t already have it.Install kubectlInstall the latest amd64 version of kubectl for managing Kubernetes 1.23 clusters if not installed:if which kubectl &gt;/dev/null 2&gt;&amp;1; then  echo \"kubectl installed\";else  echo \"kubectl not installed. Installing...\";  curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.23.7/2022-06-29/bin/linux/amd64/kubectlfi;For more info or other versions, visit Installing or updating kubectl in the Amazon EKS User Guide.Install helmInstall the latest version of helm for deploying container applications to Kubernetes if not installed:if which helm &gt;/dev/null 2&gt;&amp;1; then  echo \"helm installed\";else  echo \"helm not installed. Installing...\";  sudo yum install -y openssl \\  &amp;&amp; curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 \\  &amp;&amp; chmod 700 get_helm.sh \\  &amp;&amp; ./get_helm.sh;fi;For more info or other versions, visit Installing Helm in the official HELM Docs.Install eksctlInstall the latest version of eksctl for making it easier to manage Kubernetes clusters running on Amazon EKS if not installed:if which eksctl &gt;/dev/null 2&gt;&amp;1; then  echo \"eksctl installed\";else  echo \"eksctl not installed. Installing...\";  curl --silent --location \"https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz\" | tar xz -C /tmp  sudo mv /tmp/eksctl /usr/local/binfi;For more info or other versions, visit Installing or updating eksctl in the Amazon EKS User Guide.Install allInstall the latest version of any of the above that are not installed:# kubctlif which kubectl &gt;/dev/null 2&gt;&amp;1; then  echo \"kubectl installed\";else  echo \"kubectl not installed. Installing...\";  curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.23.7/2022-06-29/bin/linux/amd64/kubectlfi;# helmif which helm &gt;/dev/null 2&gt;&amp;1; then  echo \"helm installed\";else  echo \"helm not installed. Installing...\";  sudo yum install -y openssl \\  &amp;&amp; curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 \\  &amp;&amp; chmod 700 get_helm.sh \\  &amp;&amp; ./get_helm.sh;fi;# eksctlif which eksctl &gt;/dev/null 2&gt;&amp;1; then  echo \"eksctl installed\";else  echo \"eksctl not installed. Installing...\";  curl --silent --location \"https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz\" | tar xz -C /tmp  sudo mv /tmp/eksctl /usr/local/binfi;",
+      "url": "/20-bash-kubernetes-install.html",
+      "href": "/20-bash-kubernetes-install.html"
+    }
+    ,
+  
+    
     "20-bash-mount-html": {
       "title": "Bash - Mount Disk and Drives",
       "category": "",
