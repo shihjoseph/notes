@@ -4,7 +4,7 @@ window.database = {
     "10-js-copy-html": {
       "title": "JavaScript - Copy Text in Browser",
       "category": "",
-      "content": "Bash - JavaScript - Copy Text in BrowserThis uses ClipboardJS to copy without plugins or Flash.Include script:&lt;script src=\"https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js\"&gt;&lt;/script&gt;In JavaScript, define a function that returns the text to be copied.// Uses event delegation (bubble up)var buttonCopy = new ClipboardJS(\"input[type=\\\"button\\\"][data-copytext]\", {    text: function(trigger) {        return trigger.getAttribute('data-copytext');    }});",
+      "content": "JavaScript - Copy Text in BrowserThis uses ClipboardJS to copy without plugins or Flash.Include script:&lt;script src=\"https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js\"&gt;&lt;/script&gt;In JavaScript, define a function that returns the text to be copied.// Uses event delegation (bubble up)var buttonCopy = new ClipboardJS(\"input[type=\\\"button\\\"][data-copytext]\", {    text: function(trigger) {        return trigger.getAttribute('data-copytext');    }});",
       "url": "/10-js-copy.html",
       "href": "/10-js-copy.html"
     }
@@ -14,9 +14,29 @@ window.database = {
     "10-js-download-html": {
       "title": "JavaScript - Download Frontend File Without Server",
       "category": "",
-      "content": "Bash - JavaScript - Download Frontend File Without ServerSometimes you have string in the browser web page you want to download. You can make the string downloadable.var makeDownload = function(val, filename, contentType) {    if (!val || !filename || !contentType) {        return;    }    var a = window.document.createElement('a');    a.href = window.URL.createObjectURL(new Blob([val], {type: contentType}));    a.download = filename;        document.body.appendChild(a);    a.click();    document.body.removeChild(a);};To call the function, pass in the data to download, filename, and content type.makeDownload(    \"First name,Last name,Email\\nJohn,Doe,john@example.com\\nJane,Doe,jane@example.com\",    \"filename.csv\",    \"text/csv\");Here is an example adding a listener to buttons.&lt;input type=\"button\" class=\"download\" data-content=\"Hello World!\" value=\"Download\" /&gt;document.querySelector(\"input[type=\\\"button\\\"].download\").addEventListener(\"click\", function(e) {    makeDownload(this.getAttribute(\"data-content\"), \"filename.txt\", \"text/plain\");});",
+      "content": "JavaScript - Download Frontend File Without ServerSometimes you have string in the browser web page you want to download. You can make the string downloadable.var makeDownload = function(val, filename, contentType) {    if (!val || !filename || !contentType) {        return;    }    var a = window.document.createElement('a');    a.href = window.URL.createObjectURL(new Blob([val], {type: contentType}));    a.download = filename;        document.body.appendChild(a);    a.click();    document.body.removeChild(a);};To call the function, pass in the data to download, filename, and content type.makeDownload(    \"First name,Last name,Email\\nJohn,Doe,john@example.com\\nJane,Doe,jane@example.com\",    \"filename.csv\",    \"text/csv\");Here is an example adding a listener to buttons.&lt;input type=\"button\" class=\"download\" data-content=\"Hello World!\" value=\"Download\" /&gt;document.querySelector(\"input[type=\\\"button\\\"].download\").addEventListener(\"click\", function(e) {    makeDownload(this.getAttribute(\"data-content\"), \"filename.txt\", \"text/plain\");});",
       "url": "/10-js-download.html",
       "href": "/10-js-download.html"
+    }
+    ,
+  
+    
+    "15-nodejs-aws-s3-html": {
+      "title": "Node.js - Simple S3 examples within async functions",
+      "category": "",
+      "content": "Node.js - Simple S3 examples within async functionsA simple get object example within an async function.(async function() {    const AWS = require(\"aws-sdk\");  const s3 = new AWS.S3();    let results;  try {        const s3Result = await s3.getObject({      Bucket: \"bucketname\",      Key: \"key\"    }).promise();    results = s3Result.Body.toString(\"utf8\");      } catch (e) {        console.log(`Could not retrieve from S3: ${e.message}`);    results = \"\";      }  console.log(results);  })();Put object example.(async function() {    const AWS = require(\"aws-sdk\");  const s3 = new AWS.S3();    try {        await s3.putObject({      Body: \"Some text\",      Bucket: \"bucketname\",      Key: \"key\",      ContentType: \"text/plain\"    }).promise();        console.log(\"Saved to S3\");      } catch (e) {        console.log(`Could not save to S3: ${e.message}`);      }  })();",
+      "url": "/15-nodejs-aws-s3.html",
+      "href": "/15-nodejs-aws-s3.html"
+    }
+    ,
+  
+    
+    "15-nodejs-web-request-html": {
+      "title": "Node.js - Simple HTTP web request for GET and POST",
+      "category": "",
+      "content": "Node.js - Simple HTTP web request for GET and POSTA simple asyncronous Node.js script for sending HTTP requests.// Web requestconst sendRequest = async function(url, opt) {  opt = opt ? opt : {};  const parsedUrl = require(\"url\").parse(url);  let headers = opt.headers ? opt.headers : {};  headers[\"Content-length\"] = opt.body ? opt.body.length : 0;  const options = {    hostname: parsedUrl.hostname,    port: opt.port ? opt.port : (parsedUrl.protocol == \"https:\" ? 443 : 80),    path: parsedUrl.path,    method: opt.method ? opt.method : \"GET\",    headers: headers  };  let response = await new Promise(function(res, err) {    let request = require(parsedUrl.protocol == \"https:\" ? \"https\" : \"http\").request(options, function(response) {      let responseText = [];      response.on(\"data\", function(d) {        responseText.push(d);      });      response.on(\"end\", function() {        response.responseText = responseText.join(\"\");        res(response);      });    });    request.on(\"error\", function(error) {      console.error(\"sendRequest Error: \" + error);      err(error);    });    request.write(opt.body ? opt.body : \"\");    request.end();  });  return response;};Simple use within an async function.(async function() {    const res = await sendRequest(\"https://example.com\");    console.log(res.responseText);  })();More options.(async function() {    const res = await sendRequest(\"http://example.com\", {    headers: {      Key: \"Value\"    },    port: 8000,    method: \"POST\",    body: \"Some payload\"  });    console.log(res.responseText);  })();",
+      "url": "/15-nodejs-web-request.html",
+      "href": "/15-nodejs-web-request.html"
     }
     ,
   
