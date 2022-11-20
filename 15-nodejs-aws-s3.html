@@ -106,6 +106,31 @@
 })();
 </code></pre>
 
+<p>Delete object example.</p>
+
+<pre><code class="language-javascript">(async function() {
+  
+  const AWS = require("aws-sdk");
+  const s3 = new AWS.S3();
+  
+  try {
+    
+    await s3.deleteObject({
+      Bucket: "bucketname",
+      Key: "key"
+    }).promise();
+    
+    console.log("Deleted object in S3");
+    
+  } catch (e) {
+    
+    console.log(`Could not delete object in S3: ${e.message}`);
+    
+  }
+  
+})();
+</code></pre>
+
 
 
 				</div>
