@@ -70,7 +70,7 @@
     
   } catch (e) {
     
-    console.log(`Could not retrieve from S3: ${e.message}`);
+    console.error(`Could not retrieve from S3: ${e.message}`);
     results = "";
     
   }
@@ -99,7 +99,7 @@
     
   } catch (e) {
     
-    console.log(`Could not save to S3: ${e.message}`);
+    console.error(`Could not save to S3: ${e.message}`);
     
   }
   
@@ -124,7 +124,7 @@
     
   } catch (e) {
     
-    console.log(`Could not delete object in S3: ${e.message}`);
+    console.error(`Could not delete object in S3: ${e.message}`);
     
   }
   
