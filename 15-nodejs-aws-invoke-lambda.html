@@ -64,7 +64,7 @@
     
     invokeResult = await lambda.invoke({
       FunctionName: "FUNCTION_ARN",
-      InvocationType: "Event",
+      InvocationType: "RequestResponse",
       Payload: JSON.stringify({
         "key": "val"
       })
@@ -90,14 +90,15 @@
   
   try {
     
-    await lambda.invokeAsync({
+    const invokeResult = await lambda.invoke({
       FunctionName: "FUNCTION_ARN",
-      InvokeArgs: JSON.stringify({
+      InvocationType: "Event",
+      Payload: JSON.stringify({
         "key": "val"
       })
     }).promise();
       
-    console.log("Invoked Lambda function");
+    console.log(`Invoked Lambda function: ${JSON.stringify(invokeResult)}`);
     
   } catch (e) {
     
