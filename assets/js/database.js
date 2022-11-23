@@ -21,12 +21,32 @@ window.database = {
     ,
   
     
+    "15-nodejs-aws-dynamodb-html": {
+      "title": "Node.js - Simple DynamoDB examples within async functions",
+      "category": "",
+      "content": "Node.js - Simple DynamoDB examples within async functionsThe following example uses a hash key attr1 and a range key attr2.A simple query example within an async function.(async function() {    const AWS = require(\"aws-sdk\");  const documentClient = new AWS.DynamoDB.DocumentClient(); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html    let queryResult;  try {        queryResult = await documentClient.query({      TableName: process.env.ScanQueueTableName,      ConsistentRead: false,      ExpressionAttributeNames: {        \"#attr1\": \"attr1\" // Assign attribute names to #varname      },      ExpressionAttributeValues: {        \":attr1\": \"val1\" // Assign attribute value to :varname      },      KeyConditionExpression: \"#attr1 = :attr1\", // Use #varname and :varname      ProjectionExpression: \"attr1,attr2\",      ReturnConsumedCapacity: \"NONE\",      ScanIndexForward: false    }).promise();      } catch (e) {        console.error(`Could not retrieve from DynamoDB: ${e.message}`);      }      // Empty?  if (!queryResult || !Array.isArray(queryResult.Items) || queryResult.Items.length == 0) {    console.log(`No items in query result:`, JSON.stringify(queryResult));    return;  }    // Print all  for (const item of queryResult.Items) {    console.log(`attr1: ${item[\"attr1\"]} and attr2: ${item[\"attr2\"]}`);  }  })();Single write example.(async function() {    const AWS = require(\"aws-sdk\");  const documentClient = new AWS.DynamoDB.DocumentClient(); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html    var item = {};    await documentClient.put({      TableName: \"TABLE_NAME\",      Item: {        \"attr1\": \"val1\",        \"attr2\": \"val2\"      }    }).promise();          console.log(\"Saved to DynamoDB\");      } catch (e) {        console.error(`Could not save to DynamoDB: ${e.message}`);      }  })();Batch write example.(async function() {    const AWS = require(\"aws-sdk\");  const documentClient = new AWS.DynamoDB.DocumentClient(); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html    try {        await documentClient.batchWrite({      RequestItems: {        \"TABLE_NAME\": [          {            PutRequest: {              Item: {                \"attr1\": \"val1\",                \"attr2\": \"val2\"              }            }          },          {            PutRequest: {              Item: {                \"attr1\": \"val1\",                \"attr2\": \"val2\"              }            }          }        ]      },      ReturnConsumedCapacity: \"NONE\",      ReturnItemCollectionMetrics: \"NONE\"    }).promise();          console.log(\"Saved to DynamoDB\");      } catch (e) {        console.error(`Could not save to DynamoDB: ${e.message}`);      }  })();Delete example(async function() {    const AWS = require(\"aws-sdk\");  const documentClient = new AWS.DynamoDB.DocumentClient(); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html    try {        await documentClient.delete({      TableName: process.env.ScanQueueTableName,      Key: {        \"attr1\": \"val1\",        \"attr2\": \"val2\"      },      ReturnConsumedCapacity: \"NONE\",      ReturnItemCollectionMetrics: \"NONE\",      ReturnValues: \"NONE\"    }).promise();          console.log(\"Deleted from DynamoDB\");      } catch (e) {        console.error(`Could not delete from DynamoDB: ${e.message}`);      }  })();",
+      "url": "/15-nodejs-aws-dynamodb.html",
+      "href": "/15-nodejs-aws-dynamodb.html"
+    }
+    ,
+  
+    
     "15-nodejs-aws-s3-html": {
       "title": "Node.js - Simple S3 examples within async functions",
       "category": "",
       "content": "Node.js - Simple S3 examples within async functionsA simple get object example within an async function.(async function() {    const AWS = require(\"aws-sdk\");  const s3 = new AWS.S3();    let results;  try {        const s3Result = await s3.getObject({      Bucket: \"bucketname\",      Key: \"key\"    }).promise();    results = s3Result.Body.toString(\"utf8\");      } catch (e) {        console.error(`Could not retrieve from S3: ${e.message}`);    results = \"\";      }  console.log(results);  })();Put object example.(async function() {    const AWS = require(\"aws-sdk\");  const s3 = new AWS.S3();    try {        await s3.putObject({      Body: \"Some text\",      Bucket: \"bucketname\",      Key: \"key\",      ContentType: \"text/plain\"    }).promise();        console.log(\"Saved to S3\");      } catch (e) {        console.error(`Could not save to S3: ${e.message}`);      }  })();Delete object example.(async function() {    const AWS = require(\"aws-sdk\");  const s3 = new AWS.S3();    try {        await s3.deleteObject({      Bucket: \"bucketname\",      Key: \"key\"    }).promise();        console.log(\"Deleted object in S3\");      } catch (e) {        console.error(`Could not delete object in S3: ${e.message}`);      }  })();",
       "url": "/15-nodejs-aws-s3.html",
       "href": "/15-nodejs-aws-s3.html"
+    }
+    ,
+  
+    
+    "15-nodejs-random-id-html": {
+      "title": "Node.js - Simple way to generate random IDs",
+      "category": "",
+      "content": "Node.js - Simple way to generate random IDsThe following example uses the built-in crypto library.const crypto = require('crypto');const id = crypto.randomBytes(8).toString(\"hex\");console.log(id);",
+      "url": "/15-nodejs-random-id.html",
+      "href": "/15-nodejs-random-id.html"
     }
     ,
   
@@ -177,6 +197,16 @@ window.database = {
       "content": "AWS CLI - Log Docker Client into Amazon Elastic Container Registry (Amazon ECR)Set region and get AWS account IDLogins are unique to each region.region=us-east-1;account_id=$(aws sts get-caller-identity --query Account --output text);Log inUsing AWS CLI &gt;= v1.17.10 or v2:aws ecr get-login-password --region ${region} \\  | sudo docker login --username AWS --password-stdin \\  ${account_id}.dkr.ecr.${region}.amazonaws.com;Using AWS CLI &lt; v1.17.10sudo $(aws ecr get-login --region ${region} --no-include-email --registry-ids ${account_id});--registry-ids ${account_id} is optional if same account.Create repository in Amazon ECRSet variable for repository name:region=us-east-1;repo_name=my-repo-name;Create repository:aws ecr --region ${region} create-repository --repository-name ${repo_name}Pull imagesudo docker pull ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestPush imageSet variable for locally built image and target repository name:image_name=my-image-name;repo_name=my-repo-name;Tag with full repository name:sudo docker tag ${image_name} ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestPush image to repository:sudo docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestClean upDelete all images in repository and delete repository.# Delete all imagesaws ecr --region ${region} batch-delete-image \\  --repository-name ${repo_name} \\  --image-ids \"$(aws ecr --region ${region} list-images --repository-name ${repo_name} --query 'imageIds[*]';)\";# Delete repositoryaws ecr --region ${region} delete-repository --repository-name ${repo_name};",
       "url": "/30-awscli-docker-ecr-login.html",
       "href": "/30-awscli-docker-ecr-login.html"
+    }
+    ,
+  
+    
+    "40-cfn-dynamodb-html": {
+      "title": "AWS CloudFormation - Create DynamoDB datrabase tables in your CloudFromation templates",
+      "category": "",
+      "content": "AWS CloudFormation - Create DynamoDB datrabase tables in your CloudFromation templatesExamples below include an auto delete if time is passed the UNIX seconds timestamp stored in the exp attribute, a number datatype.Example with one key, a hash key named attr1.Resources:  Table:    Type: AWS::DynamoDB::Table    Properties:      AttributeDefinitions:        - AttributeName: \"attr1\"          AttributeType: \"S\"      BillingMode: \"PAY_PER_REQUEST\"      KeySchema:        - AttributeName: \"attr1\"          KeyType: \"HASH\"      TableName: \"TABLE_NAME\"      TimeToLiveSpecification:        AttributeName: \"exp\"        Enabled: trueExample with two keys, a hash key named attr1 and a range key named attr2.Resources:  Table:    Type: AWS::DynamoDB::Table    Properties:      AttributeDefinitions:        - AttributeName: \"attr1\"          AttributeType: S        - AttributeName: \"attr2\"          AttributeType: S      BillingMode: \"PAY_PER_REQUEST\"      KeySchema:        - AttributeName: \"attr1\"          KeyType: HASH        - AttributeName: \"attr2\"          KeyType: RANGE      TableName: \"TABLE_NAME\"      TimeToLiveSpecification:        AttributeName: \"exp\"        Enabled: true",
+      "url": "/40-cfn-dynamodb.html",
+      "href": "/40-cfn-dynamodb.html"
     }
     ,
   
