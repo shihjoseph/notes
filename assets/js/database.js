@@ -52,9 +52,9 @@ window.database = {
   
     
     "15-nodejs-random-id-html": {
-      "title": "Node.js - Simple way to generate random IDs",
+      "title": "Node.js - Generate random IDs",
       "category": "",
-      "content": "Node.js - Simple way to generate random IDsThe following example uses the built-in crypto library.const crypto = require('crypto');const id = crypto.randomBytes(8).toString(\"hex\");console.log(id);",
+      "content": "Node.js - Generate random IDsThe following example uses the built-in crypto library.const crypto = require('crypto');const id = crypto.randomBytes(8).toString(\"hex\");console.log(id);",
       "url": "/15-nodejs-random-id.html",
       "href": "/15-nodejs-random-id.html"
     }
