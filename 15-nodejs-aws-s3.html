@@ -106,6 +106,35 @@
 })();
 </code></pre>
 
+<p>List objects example.</p>
+
+<pre><code class="language-javascript">(async function() {
+  
+  const AWS = require("aws-sdk");
+  const s3 = new AWS.S3();
+  
+  try {
+    
+    const data = await s3.listObjects({
+      Bucket: "bucketname",
+      MaxKeys: 1000,
+      Prefix: ""
+    }).promise();
+    
+    console.log(`Listing ${data.Contents.length} object(s) in bucket with prefix`);
+    for (const object of data.Contents) {
+      console.log(object.Key);
+    }
+    
+  } catch (e) {
+    
+    console.error(`Could not list objects: ${e.message}`);
+    
+  }
+  
+})();
+</code></pre>
+
 <p>Delete object example.</p>
 
 <pre><code class="language-javascript">(async function() {
