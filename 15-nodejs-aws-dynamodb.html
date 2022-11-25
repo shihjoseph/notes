@@ -93,6 +93,53 @@
 })();
 </code></pre>
 
+<p>A simple scan example within an <code>async</code> function.</p>
+
+<pre><code class="language-javascript">(async function() {
+  
+  const AWS = require("aws-sdk");
+  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
+  
+  let scanResult;
+  try {
+    
+    scanResult = await documentClient.scan({
+      TableName: "TABLE_NAME",
+      Limit: 1000,
+      ConsistentRead: false,
+      ReturnConsumedCapacity: "NONE"
+    }).promise();
+    
+  } catch (e) {
+    
+    console.error(`Could not get from DynamoDB: ${e.message}`);
+    return;
+    
+  }
+  
+  if (!scanResult || !Array.isArray(scanResult.Items) || scanResult.Items.length == 0) {
+    console.log(`No items in scan result:`, JSON.stringify(scanResult));
+    response.body = JSON.stringify({
+      status: "success",
+      items: []
+    });
+    return response;
+  }
+  
+  // Empty?
+  if (!scanResult || !Array.isArray(scanResult.Items) || scanResult.Items.length == 0) {
+    console.log(`No items in scan result:`, JSON.stringify(scanResult));
+    return;
+  }
+  
+  // Print all
+  for (const item of scanResult.Items) {
+    console.log(`attr1: ${item["attr1"]} and attr2: ${item["attr2"]}`);
+  }
+  
+})();
+</code></pre>
+
 <p>A simple query example within an <code>async</code> function.</p>
 
 <pre><code class="language-javascript">(async function() {
