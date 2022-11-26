@@ -261,6 +261,43 @@
 })();
 </code></pre>
 
+<p>Single update example.</p>
+
+<pre><code class="language-javascript">(async function() {
+  
+  const AWS = require("aws-sdk");
+  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
+  
+  try {
+    
+    await documentClient.update({
+      TableName: "TABLE_NAME",
+      Key: {
+        "attr1": "val1",
+        "attr2": "val2"
+      },
+      UpdateExpression: 'set #a = :x + :y',
+      ConditionExpression: '#a &lt; :MAX',
+      ExpressionAttributeNames: {'#a' : 'Sum'},
+      ExpressionAttributeValues: {
+        ':x' : 20,
+        ':y' : 45,
+        ':MAX' : 100,
+      }
+    }).promise();
+      
+    console.log("Saved to DynamoDB");
+    
+  } catch (e) {
+    
+    console.error(`Could not save to DynamoDB: ${e.message}`);
+    return;
+    
+  }
+  
+})();
+</code></pre>
+
 <p>Delete example</p>
 <pre><code class="language-javascript">(async function() {
   
