@@ -60,7 +60,7 @@
   Instance: 
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ""
+      ImageId: '{{resolve:ssm:/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id}}'
 </code></pre>
 
 <h2 id="adding-in-parameters-of-the-template">Adding in <code>Parameters</code> of the template</h2>
