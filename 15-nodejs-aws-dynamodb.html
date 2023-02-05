@@ -54,7 +54,7 @@
 
 <p>The following examples uses a hash key <code>attr1</code> and a range key <code>attr2</code>.</p>
 
-<p>A simple get example within an <code>async</code> function.</p>
+<p>A simple <strong>get</strong> example within an <code>async</code> function.</p>
 
 <pre><code class="language-javascript">(async function() {
   
@@ -93,7 +93,7 @@
 })();
 </code></pre>
 
-<p>A simple scan example within an <code>async</code> function.</p>
+<p>A simple <strong>scan</strong> example within an <code>async</code> function.</p>
 
 <pre><code class="language-javascript">(async function() {
   
@@ -131,7 +131,7 @@
 })();
 </code></pre>
 
-<p>A simple query example within an <code>async</code> function.</p>
+<p>A simple <strong>query</strong> example within an <code>async</code> function.</p>
 
 <pre><code class="language-javascript">(async function() {
   
@@ -177,7 +177,7 @@
 })();
 </code></pre>
 
-<p>Single write example.</p>
+<p><strong>Single write</strong> example.</p>
 
 <pre><code class="language-javascript">(async function() {
   
@@ -206,7 +206,7 @@
 })();
 </code></pre>
 
-<p>Batch write example.</p>
+<p><strong>Batch write</strong> example.</p>
 
 <pre><code class="language-javascript">(async function() {
   
@@ -233,6 +233,13 @@
                 "attr2": "val2"
               }
             }
+          },
+          {
+            DeleteRequest: {
+              Key: {
+                "attr1": "val1"
+              }
+            }
           }
         ]
       },
@@ -252,7 +259,7 @@
 })();
 </code></pre>
 
-<p>Single update example.</p>
+<p><strong>Single update</strong> example.</p>
 
 <pre><code class="language-javascript">(async function() {
   
@@ -289,7 +296,7 @@
 })();
 </code></pre>
 
-<p>Delete example</p>
+<p>**Delete(( example</p>
 <pre><code class="language-javascript">(async function() {
   
   const AWS = require("aws-sdk");
