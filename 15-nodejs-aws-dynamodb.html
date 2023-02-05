@@ -117,15 +117,6 @@
     
   }
   
-  if (!scanResult || !Array.isArray(scanResult.Items) || scanResult.Items.length == 0) {
-    console.log(`No items in scan result:`, JSON.stringify(scanResult));
-    response.body = JSON.stringify({
-      status: "success",
-      items: []
-    });
-    return response;
-  }
-  
   // Empty?
   if (!scanResult || !Array.isArray(scanResult.Items) || scanResult.Items.length == 0) {
     console.log(`No items in scan result:`, JSON.stringify(scanResult));
