@@ -72,9 +72,9 @@ window.database = {
   
     
     "20-bash-boot-script-html": {
-      "title": "Bash - Boot Script - Run Script on Reboot - Auto Restart",
+      "title": "Bash - Boot Script - Run Script on Reboot (Auto Restart) or on a schedule",
       "category": "",
-      "content": "Bash - Boot Script - Run Script on Reboot - Auto RestartEdit to /etc/crontab file.sudo vim /etc/crontabAdd @reboot followed by the user to run and the script.@reboot ubuntu /home/ubuntu/my_script.sh",
+      "content": "Bash - Boot Script - Run Script on Reboot (Auto Restart) or on a scheduleEdit to /etc/crontab file.sudo vim /etc/crontabAdd @reboot followed by the user to run and the script.@reboot ubuntu /home/ubuntu/my_script.shYou can also add the above line into the crontab directory /etc/cron.d/ (do not use filename extension)The following runs a script at the top of every hour.sudo bash -c \"echo '0 * * * * ubuntu /home/ubuntu/my_script.sh' &gt; /etc/cron.d/myScript\";",
       "url": "/20-bash-boot-script.html",
       "href": "/20-bash-boot-script.html"
     }
@@ -114,7 +114,7 @@ window.database = {
     "20-bash-here-docs-html": {
       "title": "Bash - Heredocs",
       "category": "",
-      "content": "Bash - Heredocshttps://tldp.org/LDP/abs/html/here-docs.htmlcat &gt; hello.txt &lt;&lt; EOFHello WorldEOF",
+      "content": "Bash - Heredocshttps://tldp.org/LDP/abs/html/here-docs.htmlcat &gt; hello.txt &lt;&lt; EOFHello WorldEOFQuote the delimeter to prevent parameter and variable expansion, command substitution, arithmetic expansion, or pathname expansion.cat &gt; hello.txt &lt;&lt; \"EOF\"Hello WorldEOF",
       "url": "/20-bash-here-docs.html",
       "href": "/20-bash-here-docs.html"
     }
