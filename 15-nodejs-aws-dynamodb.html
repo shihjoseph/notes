@@ -177,6 +177,53 @@
 })();
 </code></pre>
 
+<p>Another <strong>query</strong> example using a secondary index within an <code>async</code> function.</p>
+
+<pre><code class="language-javascript">(async function() {
+  
+  const AWS = require("aws-sdk");
+  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
+  
+  let queryResult;
+  try {
+    
+    queryResult = await documentClient.query({
+      TableName: "TABLE_NAME",
+      IndexName: "INDEX_NAME",
+      ConsistentRead: false,
+      ExpressionAttributeNames: {
+        "#attr1": "attr1" // Assign attribute names to #varname
+      },
+      ExpressionAttributeValues: {
+        ":attr1": "val1" // Assign attribute value to :varname
+      },
+      KeyConditionExpression: "#attr1 = :attr1", // Use #varname and :varname
+      ProjectionExpression: "attr1,attr2",
+      ReturnConsumedCapacity: "NONE",
+      ScanIndexForward: false
+    }).promise();
+    
+  } catch (e) {
+    
+    console.error(`Could not query DynamoDB: ${e.message}`);
+    return;
+    
+  }
+    
+  // Empty?
+  if (!queryResult || !Array.isArray(queryResult.Items) || queryResult.Items.length == 0) {
+    console.log(`No items in query result:`, JSON.stringify(queryResult));
+    return;
+  }
+  
+  // Print all
+  for (const item of queryResult.Items) {
+    console.log(`attr1: ${item["attr1"]} and attr2: ${item["attr2"]}`);
+  }
+  
+})();
+</code></pre>
+
 <p><strong>Single write</strong> example.</p>
 
 <pre><code class="language-javascript">(async function() {
@@ -296,7 +343,7 @@
 })();
 </code></pre>
 
-<p>**Delete(( example</p>
+<p><strong>Delete</strong> example</p>
 <pre><code class="language-javascript">(async function() {
   
   const AWS = require("aws-sdk");

@@ -96,6 +96,35 @@
         Enabled: true
 </code></pre>
 
+<p>Example with secondary index (attr2 to attr1 is one-to-many)</p>
+
+<pre><code class="language-yaml">Resources:
+  Table:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "attr1"
+          AttributeType: S
+        - AttributeName: "attr2"
+          AttributeType: S
+      BillingMode: "PAY_PER_REQUEST"
+      GlobalSecondaryIndexes:
+        - IndexName: "attr2Attr1"
+          KeySchema:
+            - AttributeName: "attr2"
+              KeyType: HASH
+            - AttributeName: "attr1"
+              KeyType: RANGE
+          Projection:
+            NonKeyAttributes:
+              - "fulfillmentUrl"
+            ProjectionType: INCLUDE
+      KeySchema:
+        - AttributeName: "attr1"
+          KeyType: HASH
+      TableName: !Sub "${AWS::StackName}-table"
+</code></pre>
+
 
 				</div>
 			</main>
