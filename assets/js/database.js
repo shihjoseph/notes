@@ -174,7 +174,7 @@ window.database = {
     "20-bash-test-if-file-or-directory-exists-html": {
       "title": "Bash - Test if File or Directory Exists",
       "category": "",
-      "content": "Test if File or Directory Existshttps://www.tldp.org/LDP/abs/html/fto.htmlCheck if regular file exists:if [ -f \"/path/to/file\" ]then  echo \"Exists\";fiCheck if file is a directory:if [ -d \"/path/to/dir\" ]then  echo \"Exists\";fi",
+      "content": "Test if File or Directory Existshttps://www.tldp.org/LDP/abs/html/fto.htmlCheck if regular file exists:if [ -f \"/path/to/file\" ]then  echo \"Exists\";fiCheck if not regular file (or does not exist):if [ ! -f \"/path/to/file\" ]then  echo \"Not file\";fiCheck if file is a directory:if [ -d \"/path/to/dir\" ]then  echo \"Exists\";fiCheck if file is not a directory (or does not exist):if [ ! -d \"/path/to/dir\" ]then  echo \"Not directory\";fi",
       "url": "/20-bash-test-if-file-or-directory-exists.html",
       "href": "/20-bash-test-if-file-or-directory-exists.html"
     }

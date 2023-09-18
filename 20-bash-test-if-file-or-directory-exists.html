@@ -62,11 +62,27 @@ then
 fi
 </code></pre>
 
+<p>Check if not regular file (or does not exist):</p>
+
+<pre><code class="language-bash">if [ ! -f "/path/to/file" ]
+then
+  echo "Not file";
+fi
+</code></pre>
+
 <p>Check if file is a directory:</p>
 
 <pre><code class="language-bash">if [ -d "/path/to/dir" ]
 then
   echo "Exists";
+fi
+</code></pre>
+
+<p>Check if file is not a directory (or does not exist):</p>
+
+<pre><code class="language-bash">if [ ! -d "/path/to/dir" ]
+then
+  echo "Not directory";
 fi
 </code></pre>
 
