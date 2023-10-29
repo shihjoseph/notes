@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>JavaScript - Async sleep function</title>
+  <meta name="description" content="Define a timeout as an async sleep function">
+
+	<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://notes.josephshih.com/10-js-async-sleep.html">
+
+	<link rel="stylesheet" href="/assets/css/docs.css">
+
+	
+	<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M6V5RVS');</script>
+  <!-- End Google Tag Manager -->
+  
+</head>
+
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6V5RVS"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		
+		<div class="wrapper">
+			<sidebar class="sidebar" id="sidebar">
+	<div class="sidebar-mobile">
+		<img src="/assets/images/menu.svg" class="menu-icon" id="menu" />
+		<img src="/assets/images/close.svg" class="close-icon" id="close" />
+	</div>
+	<div class="search">
+	<input type="text" class="search-input" id="search-input" placeholder="Type to search" />
+</div>
+
+	<div class="sidebar-main">
+		<ul class="navigation" id="navigation">																<li>				<a class="" href="/">					Home - Hello World!				</a>			</li>								<li>				<a class="active" href="/10-js-async-sleep.html">					JavaScript - Async sleep function				</a>			</li>								<li>				<a class="" href="/10-js-copy.html">					JavaScript - Copy Text in Browser				</a>			</li>								<li>				<a class="" href="/10-js-download.html">					JavaScript - Download Frontend File Without Server				</a>			</li>								<li>				<a class="" href="/15-nodejs-aws-dynamodb.html">					Node.js - DynamoDB examples within async functions				</a>			</li>								<li>				<a class="" href="/15-nodejs-aws-invoke-lambda.html">					Node.js - Invoke Lambda functino examples				</a>			</li>								<li>				<a class="" href="/15-nodejs-aws-s3.html">					Node.js - S3 examples within async functions				</a>			</li>								<li>				<a class="" href="/15-nodejs-aws-signature-version-4.html">					Node.js - Calling AWS service endpoints and signing with AWS Signature Version 4				</a>			</li>								<li>				<a class="" href="/15-nodejs-random-id.html">					Node.js - Generate random IDs				</a>			</li>								<li>				<a class="" href="/15-nodejs-web-request.html">					Node.js - Simple HTTP web request for GET and POST				</a>			</li>								<li>				<a class="" href="/20-bash-boot-script.html">					Bash - Boot Script - Run Script on Reboot (Auto Restart) or on a schedule				</a>			</li>								<li>				<a class="" href="/20-bash-checksum.html">					Bash - Checksum (SHA, MD5)				</a>			</li>								<li>				<a class="" href="/20-bash-compress-tar.html">					Bash - Tar and Un-tar (.tar.gz or .tgz)				</a>			</li>								<li>				<a class="" href="/20-bash-date.html">					Bash - Date and Timestamps				</a>			</li>								<li>				<a class="" href="/20-bash-here-docs.html">					Bash - Heredocs				</a>			</li>								<li>				<a class="" href="/20-bash-kubernetes-install.html">					Bash - Install helm, kubectl, and eksctl if not already installed				</a>			</li>								<li>				<a class="" href="/20-bash-mount.html">					Bash - Mount Disk and Drives				</a>			</li>								<li>				<a class="" href="/20-bash-rsync.html">					Bash - Rsync - Copy and Sync Files				</a>			</li>								<li>				<a class="" href="/20-bash-service-auto-start-on-reboot.html">					Bash - Service - Auto-Start on Reboot				</a>			</li>								<li>				<a class="" href="/20-bash-ssh-generate-public-key.html">					Bash - Generate SSH Public Key from Private Key				</a>			</li>								<li>				<a class="" href="/20-bash-test-if-file-or-directory-exists.html">					Bash - Test if File or Directory Exists				</a>			</li>								<li>				<a class="" href="/20-bash-while-loop.html">					Bash - Infinite While Loop				</a>			</li>								<li>				<a class="" href="/30-awscli-assume-role.html">					AWS CLI - Assume Role				</a>			</li>								<li>				<a class="" href="/30-awscli-docker-ecr-login.html">					AWS CLI - Login Docker Client into Amazon Elastic Container Registry (Amazon ECR)				</a>			</li>								<li>				<a class="" href="/40-cfn-dynamodb.html">					AWS CloudFormation - Create DynamoDB datrabase tables in your CloudFromation templates				</a>			</li>								<li>				<a class="" href="/40-cfn-ssm-ami.html">					AWS CloudFormation - Use latest AMIs by dynamically referencing SSM Parameter Store in your CloudFromation templates				</a>			</li>			</ul>
+
+		<ul id="search-results" class="navigation"></ul>
+
+	</div>
+</sidebar>
+
+			<main class="content">
+				<div class="inner">
+					<h1 id="javascript---async-sleep-function">JavaScript - Async sleep function</h1>
+
+<p>Define the async function</p>
+
+<pre><code class="language-javascript">const sleep = async function(ms) {
+  return new Promise(function(res) {
+    setTimeout(function() {
+      res();
+    }, ms);
+  });
+};
+</code></pre>
+
+<p>Using the async function</p>
+
+<pre><code class="language-javascript">(async function() {
+  while (true) {
+    console.log(new Date());
+    await sleep(1000);
+  }
+})();
+</code></pre>
+
+
+
+				</div>
+			</main>
+		</div>
+		<script src="/assets/js/zepto.min.js"></script>
+<script src="/assets/js/lunar.min.js"></script>
+<script src="/assets/js/prism.min.js"></script>
+<script src="/assets/js/database.js"></script>
+<script src="/assets/js/search.js"></script>
+<script src="/assets/js/mobile-navigation.js"></script>
+
+		
+		<script>
+			(function(){
+				var el_search = document.getElementById("search-input");
+				if (!el_search) {
+					return;
+				}
+				el_search.focus();
+			})();
+		</script>
+	</body>
+</html>

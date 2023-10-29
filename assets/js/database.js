@@ -1,6 +1,16 @@
 window.database = {
   
     
+    "10-js-async-sleep-html": {
+      "title": "JavaScript - Async sleep function",
+      "category": "",
+      "content": "JavaScript - Async sleep functionDefine the async functionconst sleep = async function(ms) {  return new Promise(function(res) {    setTimeout(function() {      res();    }, ms);  });};Using the async function(async function() {  while (true) {    console.log(new Date());    await sleep(1000);  }})();",
+      "url": "/10-js-async-sleep.html",
+      "href": "/10-js-async-sleep.html"
+    }
+    ,
+  
+    
     "10-js-copy-html": {
       "title": "JavaScript - Copy Text in Browser",
       "category": "",
