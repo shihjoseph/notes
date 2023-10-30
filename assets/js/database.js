@@ -31,6 +31,16 @@ window.database = {
     ,
   
     
+    "10-js-tampermonkey-observe-and-apply-html": {
+      "title": "JavaScript - Tampermonkey script to observe changes on a page and edit it",
+      "category": "",
+      "content": "JavaScript - Tampermonkey script to observe changes on a page and edit itThe following example is Tampermonkey adds event listeners to elements in a page and also recurses into new iframes.After installing the script, visit Google Search and search for “test” keyword to see source titles specified in script turned red.Ensure to change data-added-makethisunique to something else. For example, data-added-somethingelseunique. This ensures the mutation observers are not added twice.// ==UserScript==// @name         Turn certain Google search result source title red.// @namespace    http://tampermonkey.net/// @version      0.1// @description  Adds event listener to elements in a page and also recurses into new iframes.// @author       me@josephshih.com// @match        https://www.google.com/search?*// @grant        none// ==/UserScript==(function() {    const titlesToTurnRed = [        \"Dictionary.com\",        \"Fast.com\",        \"Wikipedia\"    ];    const attrName = \"data-added-makethisunique\";    const doSomething = function(element) {        [...element.querySelectorAll('span')].forEach(function(span, index) {            if (titlesToTurnRed.indexOf(span.textContent.trim()) == -1) {                return;            }            span.style.color = \"red\";        });    };    const addListenersToDocumentOnce = function(doc) {        if (!doc || !doc.body || doc.body.getAttribute(attrName)) {            return;        }        doc.body.setAttribute(attrName, \"1\");        addMutationObserver(doc.body, \"div#search\", function(mutation) {            doSomething(mutation.target);        });        addMutationObserver(doc.body, \"iframe\", function(mutation) {            if (mutation.target.tagName == \"IFRAME\") {                addListenersToDocumentOnce(mutation.target.contentDocument);            }        });        console.log(\"Added listener to document:\", doc);    };    const addMutationObserver = function(containerToObserve, matchesStr, callback) {        const observer = new MutationObserver(function(mutationList, observer) {            for (const mutation of mutationList) {                if (mutation.target.matches(matchesStr)) {                    callback(mutation);                }            }        });        observer.observe(containerToObserve, {attributes: true, childList: true, subtree: true});    };    // Run on load    doSomething(document);    // Run on mutations    addListenersToDocumentOnce(document);})();",
+      "url": "/10-js-tampermonkey-observe-and-apply.html",
+      "href": "/10-js-tampermonkey-observe-and-apply.html"
+    }
+    ,
+  
+    
     "15-nodejs-aws-dynamodb-html": {
       "title": "Node.js - DynamoDB examples within async functions",
       "category": "",
