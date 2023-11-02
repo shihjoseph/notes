@@ -54,17 +54,18 @@
 
 <p>Sometimes you have string in the browser web page you want to download. You can make the string downloadable.</p>
 
-<pre><code class="language-javascript">var makeDownload = function(val, filename, contentType) {
+<pre><code class="language-javascript">const makeDownload = function(val, filename, contentType) {
     if (!val || !filename || !contentType) {
-        return;
+        return false;
     }
-    var a = window.document.createElement('a');
+    const a = window.document.createElement('a');
     a.href = window.URL.createObjectURL(new Blob([val], {type: contentType}));
     a.download = filename;
     
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    return true;
 };
 </code></pre>
 
