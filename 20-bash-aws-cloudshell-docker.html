@@ -57,13 +57,7 @@
 <p>Run the following command to install and</p>
 <pre><code class="language-bash">sudo yum update -y;
 sudo amazon-linux-extras install -y docker;
-sudo dockerd;
-</code></pre>
-
-<p>Select the <strong>Actions</strong> dropdown menu and select <strong>New tab</strong>.</p>
-
-<p>In the new tab, run the following command to test Docker.</p>
-<pre><code class="language-bash">sudo docker run --rm hello-world;
+echo $(nohup sudo dockerd &gt; /tmp/dockerd.log 2&gt;&amp;1 &amp;);
 </code></pre>
 
 

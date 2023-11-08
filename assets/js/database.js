@@ -104,7 +104,7 @@ window.database = {
     "20-bash-aws-cloudshell-docker-html": {
       "title": "Bash - Run Docker in AWS CloudShell",
       "category": "",
-      "content": "Run Docker in AWS CloudShellOpen AWS CloudShell.Run the following command to install andsudo yum update -y;sudo amazon-linux-extras install -y docker;sudo dockerd;Select the Actions dropdown menu and select New tab.In the new tab, run the following command to test Docker.sudo docker run --rm hello-world;",
+      "content": "Run Docker in AWS CloudShellOpen AWS CloudShell.Run the following command to install andsudo yum update -y;sudo amazon-linux-extras install -y docker;echo $(nohup sudo dockerd &gt; /tmp/dockerd.log 2&gt;&amp;1 &amp;);",
       "url": "/20-bash-aws-cloudshell-docker.html",
       "href": "/20-bash-aws-cloudshell-docker.html"
     }
