@@ -54,10 +54,18 @@
 
 <p>Open <a href="https://console.aws.amazon.com/cloudshell">AWS CloudShell</a>.</p>
 
-<p>Run the following command to install and</p>
+<p>Run the following command to install and run Docker daemon in background.</p>
 <pre><code class="language-bash">sudo yum update -y;
 sudo amazon-linux-extras install -y docker;
 echo $(nohup sudo dockerd &gt; /tmp/dockerd.log 2&gt;&amp;1 &amp;);
+</code></pre>
+
+<p>To find process ID number.</p>
+<pre><code class="language-bash">pgrep -a dockerd;
+</code></pre>
+
+<p>To kill process, append the process ID number and run.</p>
+<pre><code class="language-bash">sudo kill 
 </code></pre>
 
 

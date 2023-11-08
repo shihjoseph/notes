@@ -104,7 +104,7 @@ window.database = {
     "20-bash-aws-cloudshell-docker-html": {
       "title": "Bash - Run Docker in AWS CloudShell",
       "category": "",
-      "content": "Run Docker in AWS CloudShellOpen AWS CloudShell.Run the following command to install andsudo yum update -y;sudo amazon-linux-extras install -y docker;echo $(nohup sudo dockerd &gt; /tmp/dockerd.log 2&gt;&amp;1 &amp;);",
+      "content": "Run Docker in AWS CloudShellOpen AWS CloudShell.Run the following command to install and run Docker daemon in background.sudo yum update -y;sudo amazon-linux-extras install -y docker;echo $(nohup sudo dockerd &gt; /tmp/dockerd.log 2&gt;&amp;1 &amp;);To find process ID number.pgrep -a dockerd;To kill process, append the process ID number and run.sudo kill ",
       "url": "/20-bash-aws-cloudshell-docker.html",
       "href": "/20-bash-aws-cloudshell-docker.html"
     }
