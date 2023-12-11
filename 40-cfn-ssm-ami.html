@@ -78,7 +78,30 @@ Resources:
 
 <h2 id="looking-up-the-parameter-using-aws-cli">Looking up the parameter using AWS CLI</h2>
 
-<pre><code class="language-bash">aws ssm get-parameter --name /aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id
+<pre><code class="language-bash">$ aws ssm get-parameter --name /aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+{
+    "Parameter": {
+        "Name": "/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id",
+        "Type": "String",
+        "Value": "ami-0c7217cdde317cfec",
+        "Version": 44,
+        "LastModifiedDate": "2023-12-07T03:47:04.175000+00:00",
+        "ARN": "arn:aws:ssm:us-east-1::parameter/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id",
+        "DataType": "aws:ec2:image"
+    }
+}
+$ aws ssm get-parameter --name /aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id
+{
+    "Parameter": {
+        "Name": "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id",
+        "Type": "String",
+        "Value": "ami-0c9db8d36d76d38ed",
+        "Version": 126,
+        "LastModifiedDate": "2023-12-05T17:35:14.150000+00:00",
+        "ARN": "arn:aws:ssm:us-east-1::parameter/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id",
+        "DataType": "text"
+    }
+}
 </code></pre>
 
 
