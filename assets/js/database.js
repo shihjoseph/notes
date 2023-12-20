@@ -12,9 +12,9 @@ window.database = {
   
     
     "10-js-copy-html": {
-      "title": "JavaScript - Copy Text in Browser",
+      "title": "JavaScript - Copy text in browser",
       "category": "",
-      "content": "JavaScript - Copy Text in BrowserThis uses ClipboardJS to copy without plugins or Flash.Include script:&lt;script src=\"https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js\"&gt;&lt;/script&gt;In JavaScript, define a function that returns the text to be copied.// Uses event delegation (bubble up)var buttonCopy = new ClipboardJS(\"input[type=\\\"button\\\"][data-copytext]\", {    text: function(trigger) {        return trigger.getAttribute('data-copytext');    }});",
+      "content": "JavaScript - Copy text in browserThis uses ClipboardJS to copy without plugins or Flash.Include script:&lt;script src=\"https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js\"&gt;&lt;/script&gt;In JavaScript, define a function that returns the text to be copied.// Uses event delegation (bubble up)var buttonCopy = new ClipboardJS(\"input[type=\\\"button\\\"][data-copytext]\", {    text: function(trigger) {        return trigger.getAttribute('data-copytext');    }});",
       "url": "/10-js-copy.html",
       "href": "/10-js-copy.html"
     }
@@ -22,9 +22,9 @@ window.database = {
   
     
     "10-js-download-html": {
-      "title": "JavaScript - Download Frontend File Without Server",
+      "title": "JavaScript - Download frontend file without server",
       "category": "",
-      "content": "JavaScript - Download Frontend File Without ServerSometimes you have string in the browser web page you want to download. You can make the string downloadable.const makeDownload = function(val, filename, contentType) {    if (!val || !filename || !contentType) {        return false;    }    const a = window.document.createElement('a');    a.href = window.URL.createObjectURL(new Blob([val], {type: contentType}));    a.download = filename;        document.body.appendChild(a);    a.click();    document.body.removeChild(a);    return true;};To call the function, pass in the data to download, filename, and content type.makeDownload(    \"First name,Last name,Email\\nJohn,Doe,john@example.com\\nJane,Doe,jane@example.com\",    \"filename.csv\",    \"text/csv\");Here is an example adding a listener to buttons.&lt;input type=\"button\" class=\"download\" data-content=\"Hello World!\" value=\"Download\" /&gt;document.querySelector(\"input[type=\\\"button\\\"].download\").addEventListener(\"click\", function(e) {    makeDownload(this.getAttribute(\"data-content\"), \"filename.txt\", \"text/plain\");});",
+      "content": "JavaScript - Download frontend file without serverSometimes you have string in the browser web page you want to download. You can make the string downloadable.const makeDownload = function(val, filename, contentType) {    if (!val || !filename || !contentType) {        return false;    }    const a = window.document.createElement('a');    a.href = window.URL.createObjectURL(new Blob([val], {type: contentType}));    a.download = filename;        document.body.appendChild(a);    a.click();    document.body.removeChild(a);    return true;};To call the function, pass in the data to download, filename, and content type.makeDownload(    \"First name,Last name,Email\\nJohn,Doe,john@example.com\\nJane,Doe,jane@example.com\",    \"filename.csv\",    \"text/csv\");Here is an example adding a listener to buttons.&lt;input type=\"button\" class=\"download\" data-content=\"Hello World!\" value=\"Download\" /&gt;document.querySelector(\"input[type=\\\"button\\\"].download\").addEventListener(\"click\", function(e) {    makeDownload(this.getAttribute(\"data-content\"), \"filename.txt\", \"text/plain\");});",
       "url": "/10-js-download.html",
       "href": "/10-js-download.html"
     }
@@ -112,9 +112,9 @@ window.database = {
   
     
     "20-bash-boot-script-html": {
-      "title": "Bash - Boot Script - Run Script on Reboot (Auto Restart) or on a schedule",
+      "title": "Bash - Boot script - Run script on reboot (auto restart) or on a schedule",
       "category": "",
-      "content": "Bash - Boot Script - Run Script on Reboot (Auto Restart) or on a scheduleEdit to /etc/crontab file.sudo vim /etc/crontabAdd @reboot followed by the user to run and the script.@reboot ubuntu /home/ubuntu/my_script.shYou can also add the above line into the crontab directory /etc/cron.d/ (do not use filename extension)The following runs a script at the top of every hour.sudo bash -c \"echo '0 * * * * ubuntu /home/ubuntu/my_script.sh' &gt; /etc/cron.d/myScript\";",
+      "content": "Bash - Boot script - Run script on reboot (auto restart) or on a scheduleEdit to /etc/crontab file.sudo vim /etc/crontabAdd @reboot followed by the user to run and the script.@reboot ubuntu /home/ubuntu/my_script.shYou can also add the above line into the crontab directory /etc/cron.d/ (do not use filename extension)The following runs a script at the top of every hour.sudo bash -c \"echo '0 * * * * ubuntu /home/ubuntu/my_script.sh' &gt; /etc/cron.d/myScript\";",
       "url": "/20-bash-boot-script.html",
       "href": "/20-bash-boot-script.html"
     }
@@ -142,9 +142,9 @@ window.database = {
   
     
     "20-bash-date-html": {
-      "title": "Bash - Date and Timestamps",
+      "title": "Bash - Date and timestamps",
       "category": "",
-      "content": "Bash - Date and TimestampsPrint current datedateWed Aug  5 01:01:41 UTC 2018Print current timestampdate +%s1549024740Convert timestamp to date:date -d @1549024740Results: Fri Feb  1 12:39:00 UTC 2019",
+      "content": "Bash - Date and timestampsPrint current datedateWed Aug  5 01:01:41 UTC 2018Print current timestampdate +%s1549024740Convert timestamp to date:date -d @1549024740Results: Fri Feb  1 12:39:00 UTC 2019",
       "url": "/20-bash-date.html",
       "href": "/20-bash-date.html"
     }
@@ -182,9 +182,9 @@ window.database = {
   
     
     "20-bash-rsync-html": {
-      "title": "Bash - Rsync - Copy and Sync Files",
+      "title": "Bash - Rsync - Copy and sync files",
       "category": "",
-      "content": "Bash - Rsync - Copy and Sync FilesCopyrsync -az $source $targetCopy over SSH:rsync -az $source ubuntu@1.1.1.1:$targetTrailing slash or notTrailing slash on destination directory has no effectCopy “hello.txt” file inside “bar” directory resulting in “bar/hello.txt”:rsync -az hello.txt barCopy “foo” directory inside “bar” directory resulting in “bar/foo”:rsync -az foo barCopy files of “foo/*” directory inside “bar” directory resulting in “bar/*”:rsync -az foo/ barSyncRemove files in destination not in source:rsync -az --delete foo/ barExclude filesrsync -az --delete \\  --exclude \".git\" \\  --exclude \".gitignore\" \\  foo/ \\  bar",
+      "content": "Bash - Rsync - Copy and sync filesCopyrsync -az $source $targetCopy over SSH:rsync -az $source ubuntu@1.1.1.1:$targetTrailing slash or notTrailing slash on destination directory has no effectCopy “hello.txt” file inside “bar” directory resulting in “bar/hello.txt”:rsync -az hello.txt barCopy “foo” directory inside “bar” directory resulting in “bar/foo”:rsync -az foo barCopy files of “foo/*” directory inside “bar” directory resulting in “bar/*”:rsync -az foo/ barSyncRemove files in destination not in source:rsync -az --delete foo/ barExclude filesrsync -az --delete \\  --exclude \".git\" \\  --exclude \".gitignore\" \\  foo/ \\  bar",
       "url": "/20-bash-rsync.html",
       "href": "/20-bash-rsync.html"
     }
@@ -192,9 +192,9 @@ window.database = {
   
     
     "20-bash-service-auto-start-on-reboot-html": {
-      "title": "Bash - Service - Auto-Start on Reboot",
+      "title": "Bash - Service - Auto-start on reboot",
       "category": "",
-      "content": "Bash - Service - Auto-Start on RebootCheck if Service is RunningFor example, apache2 and httpd.sudo systemctl status apache2Check if Service is Auto-Started on Rebootsudo systemctl is-enabled apache2Enable Auto-Start of Service on Rebootsudo systemctl enable apache2Disable Auto-Start of Service on Rebootsudo systemctl disable apache2",
+      "content": "Bash - Service - Auto-start on rebootCheck if Service is RunningFor example, apache2 and httpd.sudo systemctl status apache2Check if Service is Auto-Started on Rebootsudo systemctl is-enabled apache2Enable Auto-Start of Service on Rebootsudo systemctl enable apache2Disable Auto-Start of Service on Rebootsudo systemctl disable apache2",
       "url": "/20-bash-service-auto-start-on-reboot.html",
       "href": "/20-bash-service-auto-start-on-reboot.html"
     }
@@ -202,9 +202,9 @@ window.database = {
   
     
     "20-bash-ssh-generate-public-key-html": {
-      "title": "Bash - Generate SSH Public Key from Private Key",
+      "title": "Bash - Generate SSH public key from private key",
       "category": "",
-      "content": "Bash - Generate SSH Public Key from Private Keyssh-keygen -y -f ~/.ssh/id_rsa",
+      "content": "Bash - Generate SSH public key from private keyssh-keygen -y -f ~/.ssh/id_rsa",
       "url": "/20-bash-ssh-generate-public-key.html",
       "href": "/20-bash-ssh-generate-public-key.html"
     }
@@ -212,9 +212,9 @@ window.database = {
   
     
     "20-bash-test-if-file-or-directory-exists-html": {
-      "title": "Bash - Test if File or Directory Exists",
+      "title": "Bash - Test if file or directory exists",
       "category": "",
-      "content": "Test if File or Directory Existshttps://www.tldp.org/LDP/abs/html/fto.htmlCheck if regular file exists:if [ -f \"/path/to/file\" ]then  echo \"Exists\";fiCheck if not regular file (or does not exist):if [ ! -f \"/path/to/file\" ]then  echo \"Not file\";fiCheck if file is a directory:if [ -d \"/path/to/dir\" ]then  echo \"Exists\";fiCheck if file is not a directory (or does not exist):if [ ! -d \"/path/to/dir\" ]then  echo \"Not directory\";fi",
+      "content": "Test if file or directory existshttps://www.tldp.org/LDP/abs/html/fto.htmlCheck if regular file exists:if [ -f \"/path/to/file\" ]then  echo \"Exists\";fiCheck if not regular file (or does not exist):if [ ! -f \"/path/to/file\" ]then  echo \"Not file\";fiCheck if file is a directory:if [ -d \"/path/to/dir\" ]then  echo \"Exists\";fiCheck if file is not a directory (or does not exist):if [ ! -d \"/path/to/dir\" ]then  echo \"Not directory\";fi",
       "url": "/20-bash-test-if-file-or-directory-exists.html",
       "href": "/20-bash-test-if-file-or-directory-exists.html"
     }
@@ -222,9 +222,9 @@ window.database = {
   
     
     "20-bash-while-loop-html": {
-      "title": "Bash - Infinite While Loop",
+      "title": "Bash - Infinite while loop",
       "category": "",
-      "content": "Infinite While LoopInfinite while loop:while :do  echo \"[CTRL+C] to break\"  sleep 1doneOne liner:while :; do echo \"[CTRL+C] to break\"; sleep 1; doneWith counter:ii=0;while :;do  ii=$(expr $ii + 1);  echo \"[CTRL+C] to break... ${ii}\"  sleep 1;done;Piping in text, one loop per line:ls | while read -r LINE;do  echo $LINE;done;Note: When pipe is is used, a subshell is used so values in parent shell will not be affected from within the loop",
+      "content": "Infinite while loopInfinite while loop:while :do  echo \"[CTRL+C] to break\"  sleep 1doneOne liner:while :; do echo \"[CTRL+C] to break\"; sleep 1; doneWith counter:ii=0;while :;do  ii=$(expr $ii + 1);  echo \"[CTRL+C] to break... ${ii}\"  sleep 1;done;Piping in text, one loop per line:ls | while read -r LINE;do  echo $LINE;done;Note: When pipe is is used, a subshell is used so values in parent shell will not be affected from within the loop",
       "url": "/20-bash-while-loop.html",
       "href": "/20-bash-while-loop.html"
     }
@@ -232,9 +232,9 @@ window.database = {
   
     
     "30-awscli-assume-role-html": {
-      "title": "AWS CLI - Assume Role",
+      "title": "AWS CLI - Assume role",
       "category": "",
-      "content": "AWS CLI - Assume RoleBasicsrole_arn=\"arn:aws:iam::123456789012:role/example-role\";role_session_name=\"AWSCLI-Session\";“role_session_name” can be any stringGrab credentialsaws sts assume-role --role-arn \"$role_arn\" --role-session-name \"$role_session_name\";Create three environment variables to assume the IAM role.export AWS_ACCESS_KEY_ID=&lt;access-key-id&gt;;export AWS_SECRET_ACCESS_KEY=&lt;secret-access-key&gt;;export AWS_SESSION_TOKEN=&lt;session-token&gt;;Verify that you assumed the IAM role by running this command:aws sts get-caller-identity;Unset when done:unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN;Assume quickly using jqAssume:eval $(aws sts assume-role --role-arn \"$role_arn\" --role-session-name \"$role_session_name\" \\  | jq --raw-output '.Credentials | \"export AWS_ACCESS_KEY_ID=\\\"\" + .AccessKeyId + \"\\\"\", \"export AWS_SECRET_ACCESS_KEY=\\\"\" + .SecretAccessKey + \"\\\"\", \"export AWS_SESSION_TOKEN=\\\"\" + .SessionToken + \"\\\"\"');Un-assume:unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN;",
+      "content": "AWS CLI - Assume roleBasicsrole_arn=\"arn:aws:iam::123456789012:role/example-role\";role_session_name=\"AWSCLI-Session\";“role_session_name” can be any stringGrab credentialsaws sts assume-role --role-arn \"$role_arn\" --role-session-name \"$role_session_name\";Create three environment variables to assume the IAM role.export AWS_ACCESS_KEY_ID=&lt;access-key-id&gt;;export AWS_SECRET_ACCESS_KEY=&lt;secret-access-key&gt;;export AWS_SESSION_TOKEN=&lt;session-token&gt;;Verify that you assumed the IAM role by running this command:aws sts get-caller-identity;Unset when done:unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN;Assume quickly using jqAssume:eval $(aws sts assume-role --role-arn \"$role_arn\" --role-session-name \"$role_session_name\" \\  | jq --raw-output '.Credentials | \"export AWS_ACCESS_KEY_ID=\\\"\" + .AccessKeyId + \"\\\"\", \"export AWS_SECRET_ACCESS_KEY=\\\"\" + .SecretAccessKey + \"\\\"\", \"export AWS_SESSION_TOKEN=\\\"\" + .SessionToken + \"\\\"\"');Un-assume:unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN;",
       "url": "/30-awscli-assume-role.html",
       "href": "/30-awscli-assume-role.html"
     }
@@ -242,9 +242,9 @@ window.database = {
   
     
     "30-awscli-docker-ecr-login-html": {
-      "title": "AWS CLI - Login Docker Client into Amazon Elastic Container Registry (Amazon ECR)",
+      "title": "AWS CLI - Log Docker client into Amazon Elastic Container Registry (Amazon ECR)",
       "category": "",
-      "content": "AWS CLI - Log Docker Client into Amazon Elastic Container Registry (Amazon ECR)Set region and get AWS account IDLogins are unique to each region.region=us-east-1;account_id=$(aws sts get-caller-identity --query Account --output text);Log inUsing AWS CLI &gt;= v1.17.10 or v2:aws ecr get-login-password --region ${region} \\  | sudo docker login --username AWS --password-stdin \\  ${account_id}.dkr.ecr.${region}.amazonaws.com;Using AWS CLI &lt; v1.17.10sudo $(aws ecr get-login --region ${region} --no-include-email --registry-ids ${account_id});--registry-ids ${account_id} is optional if same account.Create repository in Amazon ECRSet variable for repository name:region=us-east-1;repo_name=my-repo-name;Create repository:aws ecr --region ${region} create-repository --repository-name ${repo_name}Pull imagesudo docker pull ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestPush imageSet variable for locally built image and target repository name:image_name=my-image-name;repo_name=my-repo-name;Tag with full repository name:sudo docker tag ${image_name} ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestPush image to repository:sudo docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestClean upDelete all images in repository and delete repository.# Delete all imagesaws ecr --region ${region} batch-delete-image \\  --repository-name ${repo_name} \\  --image-ids \"$(aws ecr --region ${region} list-images --repository-name ${repo_name} --query 'imageIds[*]';)\";# Delete repositoryaws ecr --region ${region} delete-repository --repository-name ${repo_name};",
+      "content": "AWS CLI - Log Docker client into Amazon Elastic Container Registry (Amazon ECR)Set region and get AWS account IDLogins are unique to each region.region=us-east-1;account_id=$(aws sts get-caller-identity --query Account --output text);Log inUsing AWS CLI &gt;= v1.17.10 or v2:aws ecr get-login-password --region ${region} \\  | sudo docker login --username AWS --password-stdin \\  ${account_id}.dkr.ecr.${region}.amazonaws.com;Using AWS CLI &lt; v1.17.10sudo $(aws ecr get-login --region ${region} --no-include-email --registry-ids ${account_id});--registry-ids ${account_id} is optional if same account.Create repository in Amazon ECRSet variable for repository name:region=us-east-1;repo_name=my-repo-name;Create repository:aws ecr --region ${region} create-repository --repository-name ${repo_name}Pull imagesudo docker pull ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestPush imageSet variable for locally built image and target repository name:image_name=my-image-name;repo_name=my-repo-name;Tag with full repository name:sudo docker tag ${image_name} ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestPush image to repository:sudo docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latestClean upDelete all images in repository and delete repository.# Delete all imagesaws ecr --region ${region} batch-delete-image \\  --repository-name ${repo_name} \\  --image-ids \"$(aws ecr --region ${region} list-images --repository-name ${repo_name} --query 'imageIds[*]';)\";# Delete repositoryaws ecr --region ${region} delete-repository --repository-name ${repo_name};",
       "url": "/30-awscli-docker-ecr-login.html",
       "href": "/30-awscli-docker-ecr-login.html"
     }
@@ -288,9 +288,9 @@ window.database = {
       
     
     "": {
-      "title": "Home - Hello World!",
+      "title": "Home - Hello world! | Programming, commands, and technical Notes",
       "category": "",
-      "content": "# Programming, Commands, and Technical Notes## From a Full-Stack DeveloperThis site is a collection of notes gathered over the years of building frontend and backend applications. Much of these commands or snippets are simple, straightforward, and sometimes often forgotten.Use the search bar for instant search.Many notes have yet to be added and will be added from time to time.",
+      "content": "# Programming, commands, and technical Notes## From a full-stack developerThis site is a collection of notes gathered over the years of building frontend and backend applications. Much of these commands or snippets are simple, straightforward, and sometimes often forgotten.Use the search bar for instant search.Many notes have yet to be added and will be added from time to time.",
       "url": "/",
       "href": "/"
     }
