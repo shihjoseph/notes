@@ -67,12 +67,10 @@ console.log(JSON.stringify(s3));
   "objectKey": "puppy.png"
 }
 </code></pre>
-
-<p>Notes:</p>
 <ul>
-  <li>Returned <code>undefined</code> if failed to parse.</li>
-  <li>If the URL does not include the object key, an empty string (<code>""</code>) is returned for <code>objectKey</code>.</li>
-  <li>For S3 URL formats that do not include the bucket region, an empty string (<code>""</code>) is returned for <code>bucketRegion</code>.</li>
+  <li>Returns <code>undefined</code> if failed to parse.</li>
+  <li>If the URL does not include the object key, returns an empty string (<code>""</code>) for <code>objectKey</code>.</li>
+  <li>For S3 URL formats that do not include the bucket region, returns an empty string (<code>""</code>) for <code>bucketRegion</code>.</li>
 </ul>
 
 <p>Implementation.</p>
