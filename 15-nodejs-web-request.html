@@ -65,26 +65,60 @@ const sendRequest = async function(url, opt) {
     port: opt.port ? opt.port : (parsedUrl.protocol == "https:" ? 443 : 80),
     path: parsedUrl.path,
     method: opt.method ? opt.method : "GET",
-    headers: headers
+    headers: headers,
+    timeout: typeof opt.timeout == "number" ? opt.timeout : 30000
   };
   let response = await new Promise(function(res, err) {
+    let completed = false;
     let request = require(parsedUrl.protocol == "https:" ? "https" : "http").request(options, function(response) {
       let responseText = [];
       response.on("data", function(d) {
         responseText.push(d);
       });
       response.on("end", function() {
+        completed = true;
         response.responseText = responseText.join("");
         res(response);
       });
     });
     request.on("error", function(error) {
-      console.error("sendRequest Error: " + error);
+      completed = true;
+      console.error(`sendRequest Error: ${error.message}`);
       err(error);
     });
     request.write(opt.body ? opt.body : "");
     request.end();
+    if (options.timeout &gt; 0) {
+      setTimeout(function() {
+        if (completed) {
+          return;
+        }
+        request.destroy(new Error(`Timed out (${options.timeout} ms).`));
+      }, options.timeout);
+    }
   });
+  if (response.statusCode == 301 || response.statusCode == 302) {
+    let redirectUrl;
+    const locationParsed = require("url").parse(response.headers.location);
+    if (response.headers.location) {
+      if (locationParsed.protocol &amp;&amp; locationParsed.host) {
+        redirectUrl = locationParsed.href;
+      } else if (locationParsed.path) {
+        if (locationParsed.path[0] == "/") {
+          redirectUrl = `${parsedUrl.protocol}//${parsedUrl.host}${locationParsed.path}`;
+        } else {
+          redirectUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedUrl.path.replace(/^([^?]*\/).*$/,"$1")}${locationParsed.path}`;
+        }
+      } else {
+        throw new Error(`Redirect location header invalid: ${response.headers.location}`);
+      }
+    } else {
+      throw new Error(`Redirect location header missing: ${response.headers.location}`);
+    }
+    const newOpt = {...JSON.parse(JSON.stringify(opt)),...{method: "GET"}};
+    delete newOpt.body;
+    return await sendRequest(redirectUrl, newOpt);
+  }
   return response;
 };
 </code></pre>

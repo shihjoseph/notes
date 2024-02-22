@@ -57,7 +57,30 @@
 <p>Note that this example uses the temporary AWS credentials provided by an <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html">IAM role for Amazon EC2</a>.</p>
 
 <p>Create a file <code>example.js</code> with the following content and replace the example values at the top.</p>
-<pre><code class="language-javascript">const HOST = "catalog.marketplace.us-east-1.amazonaws.com";
+<pre><code class="language-javascript">// Example of listing all S3 buckets:
+const HOST = "s3.amazonaws.com";
+const REGION = "us-east-1";
+const SERVICE_NAME = "s3";
+const METHOD = "GET";
+const PATH = "/";
+const PAYLOAD = ``;
+
+// Other example of listing all container products in your AWS Marketplace seller account:
+/*
+const HOST = "catalog.marketplace.us-east-1.amazonaws.com";
+const REGION = "us-east-1";
+const SERVICE_NAME = "aws-marketplace";
+const METHOD = "POST";
+const PATH = "/ListEntities";
+const PAYLOAD = `{
+  "Catalog": "AWSMarketplace",
+  "EntityType": "ContainerProduct"
+}`;
+*/
+
+// Other example of updating a container product information in your AWS Marketplace seller account:
+/* 
+const HOST = "catalog.marketplace.us-east-1.amazonaws.com";
 const REGION = "us-east-1";
 const SERVICE_NAME = "aws-marketplace";
 const METHOD = "POST";
@@ -79,6 +102,7 @@ const PAYLOAD = `{
     }
   ]
 }`;
+*/
 
 const sendRequest = async function(url, opt) {
   opt = opt ? opt : {};
@@ -90,28 +114,85 @@ const sendRequest = async function(url, opt) {
     port: opt.port ? opt.port : (parsedUrl.protocol == "https:" ? 443 : 80),
     path: parsedUrl.path,
     method: opt.method ? opt.method : "GET",
-    headers: headers
+    headers: headers,
+    timeout: typeof opt.timeout == "number" ? opt.timeout : 30000
   };
   let response = await new Promise(function(res, err) {
-    const proto = parsedUrl.protocol == "https:" ? require("https") : require("http");
-    let request = proto.request(options, function(response) {
+    let completed = false;
+    let request = require(parsedUrl.protocol == "https:" ? "https" : "http").request(options, function(response) {
       let responseText = [];
       response.on("data", function(d) {
         responseText.push(d);
       });
       response.on("end", function() {
+        completed = true;
         response.responseText = responseText.join("");
         res(response);
       });
     });
     request.on("error", function(error) {
-      console.error("sendRequest Error: " + error);
+      completed = true;
+      console.error(`sendRequest Error: ${error.message}`);
       err(error);
     });
     request.write(opt.body ? opt.body : "");
     request.end();
+    if (options.timeout &gt; 0) {
+      setTimeout(function() {
+        if (completed) {
+          return;
+        }
+        request.destroy(new Error(`Timed out (${options.timeout} ms).`));
+      }, options.timeout);
+    }
   });
+  if (response.statusCode == 301 || response.statusCode == 302) {
+    let redirectUrl;
+    const locationParsed = require("url").parse(response.headers.location);
+    if (response.headers.location) {
+      if (locationParsed.protocol &amp;&amp; locationParsed.host) {
+        redirectUrl = locationParsed.href;
+      } else if (locationParsed.path) {
+        if (locationParsed.path[0] == "/") {
+          redirectUrl = `${parsedUrl.protocol}//${parsedUrl.host}${locationParsed.path}`;
+        } else {
+          redirectUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedUrl.path.replace(/^([^?]*\/).*$/,"$1")}${locationParsed.path}`;
+        }
+      } else {
+        throw new Error(`Redirect location header invalid: ${response.headers.location}`);
+      }
+    } else {
+      throw new Error(`Redirect location header missing: ${response.headers.location}`);
+    }
+    const newOpt = {...JSON.parse(JSON.stringify(opt)),...{method: "GET"}};
+    delete newOpt.body;
+    return await sendRequest(redirectUrl, newOpt);
+  }
   return response;
+};
+
+/*
+  Return:
+  {
+    "AccessKeyId": "ASIAQVEXAMPLE12345",
+    "SecretAccessKey": "example12345",
+    "Token": "exampleToken12345"
+  }
+  Or false if none.
+*/
+const getEnvVarCredentials = function() {
+  if (
+    !process.env.AWS_ACCESS_KEY_ID ||
+    !process.env.AWS_SECRET_ACCESS_KEY ||
+    !process.env.AWS_SESSION_TOKEN
+  ) {
+    return false;
+  }
+  return {
+    "AccessKeyId": process.env.AWS_ACCESS_KEY_ID,
+    "SecretAccessKey": process.env.AWS_SECRET_ACCESS_KEY,
+    "Token": process.env.AWS_SESSION_TOKEN
+  };
 };
 
 /*
@@ -125,13 +206,87 @@ const sendRequest = async function(url, opt) {
     "Token": "exampleToken12345",
     "Expiration": "2022-09-27T01:37:12Z"
   }
+  Or false if none.
+*/
+const getInstanceRoleV2 = async function() {
+  // IMDSv2
+  const tokenEndpoint = "http://169.254.169.254/latest/api/token";
+  let token;
+  try {
+    token = (await sendRequest(tokenEndpoint, {
+      method: "PUT",
+      headers: {
+        "X-aws-ec2-metadata-token-ttl-seconds": 900
+      }
+    })).responseText;
+    if (!token) {
+      throw new Error(`No response from IMDSv2 token endpoint: ${tokenEndpoint}`);
+    }
+  } catch (e) {
+    console.error(`Could not get token for IMDSv2: ${e.message}`);
+    return false;
+  }
+  const endpoint = "http://169.254.169.254/latest/meta-data/iam/security-credentials/";
+  let roleName;
+  let json;
+  try {
+    roleName = (await sendRequest(endpoint, {
+      headers: {
+        "X-aws-ec2-metadata-token": token
+      }
+    })).responseText;
+    if (!roleName) {
+      throw new Error(`No response from IMDSv2 endpoint: ${endpoint}`);
+    }
+    json = (await sendRequest(`${endpoint}${roleName}`, {
+      headers: {
+        "X-aws-ec2-metadata-token": token
+      }
+    })).responseText;
+    if (!json) {
+      throw new Error(`No response from IMDSv2 endpoint: ${endpoint}${roleName}`);
+    }
+    const creds = JSON.parse(json);
+    return creds;
+  } catch (e) {
+    console.error(`Could not get IMDSv2 role credentials: ${e.message}`);
+    return false;
+  }
+};
+
+/*
+  Return:
+  {
+    "Code": "Success",
+    "LastUpdated": "2022-09-26T19:14:08Z",
+    "Type": "AWS-HMAC",
+    "AccessKeyId": "ASIAQVEXAMPLE12345",
+    "SecretAccessKey": "example12345",
+    "Token": "exampleToken12345",
+    "Expiration": "2022-09-27T01:37:12Z"
+  }
+  Or false if none.
 */
 const getInstanceRole = async function() {
+  // IMDSv1
   const endpoint = "http://169.254.169.254/latest/meta-data/iam/security-credentials/";
-  const roleName = (await sendRequest(endpoint)).responseText;
-  const json = (await sendRequest(endpoint + "/" + roleName)).responseText;
-  const creds = JSON.parse(json);
-  return creds;
+  let roleName;
+  let json;
+  try {
+    roleName = (await sendRequest(endpoint)).responseText;
+    if (!roleName) {
+      throw new Error(`No response from IMDSv1 endpoint: ${endpoint}`);
+    }
+    json = (await sendRequest(`${endpoint}${roleName}`)).responseText;
+    if (!json) {
+      throw new Error(`No response from IMDSv1 endpoint: ${endpoint}${roleName}`);
+    }
+    const creds = JSON.parse(json);
+    return creds;
+  } catch (e) {
+    console.error(`Could not get IMDSv1 role credentials: ${e.message}`);
+    return false;
+  }
 };
 
 
@@ -186,9 +341,13 @@ const getCanonicalQueryStringFromPath = function(path) {
   return params.join("&amp;");
 };
 
+const getSha256Signature = function(str) {
+  const crypto = require("crypto");
+  return crypto.createHash("sha256").update(str).digest("hex").toLowerCase();
+};
+
 // https://docs.aws.amazon.com/general/latest/gr/sigv4_elements.html
 const createCanonicalRequest = function(method, path, host, headers, payload) {
-  
   const pathNoQueryString = path.split("?")[0];
   const queryString = getCanonicalQueryStringFromPath(path);
   const canonicalHeaders = getCanonicalHeaders(headers);
@@ -197,8 +356,7 @@ const createCanonicalRequest = function(method, path, host, headers, payload) {
   }).join("\n") + "\n";
   const signedHeaders = Object.keys(canonicalHeaders).join(";");
   
-  const crypto = require("crypto");
-  const payloadHashHex = crypto.createHash("sha256").update(payload).digest("hex").toLowerCase();
+  const payloadHashHex = getSha256Signature(payload);
   
   const canonicalRequest =
     method + "\n" +
@@ -209,13 +367,6 @@ const createCanonicalRequest = function(method, path, host, headers, payload) {
     payloadHashHex;
   
   return canonicalRequest;
-};
-const hashCanonicalRequest = function(canonicalRequest) {
-  
-  const crypto = require("crypto");
-  const canonicalHashHex = crypto.createHash("sha256").update(canonicalRequest).digest("hex").toLowerCase();
-  
-  return canonicalHashHex;
 };
 
 // https://docs.aws.amazon.com/general/latest/gr/sigv4-create-string-to-sign.html
@@ -257,19 +408,31 @@ const createAuthorizationHeader = function(accessKeyId, date, region, serviceNam
 };
 
 (async function(){
-  const creds = await getInstanceRole();
+  let creds;
+  creds = getEnvVarCredentials();
+  if (!creds) {
+    creds = await getInstanceRoleV2();
+  }
+  if (!creds) {
+    creds = await getInstanceRole();
+  }
+  if (!creds) {
+    console.error("No AWS credentials found in environment variables or instance metadata service.");
+    return;
+  }
 
   const date = new Date();
   const yyyymmddthhmmssz = date.toISOString().split(".")[0].replace(/[\-:]/g, "") + "Z";
   let headers = {
     "Host": HOST,
     "X-Amz-Date": yyyymmddthhmmssz,
-    "X-Amz-Security-Token": creds.Token
+    "X-Amz-Security-Token": creds.Token,
+    "x-amz-content-sha256": getSha256Signature(PAYLOAD) // For s3: https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html
   };
   
   const canonicalRequest = createCanonicalRequest(METHOD, PATH, HOST, headers, PAYLOAD);
   
-  const hashedCanonicalRequest = hashCanonicalRequest(canonicalRequest);
+  const hashedCanonicalRequest = getSha256Signature(canonicalRequest);
   
   const stringToSign = createStringToSign(date, REGION, SERVICE_NAME, hashedCanonicalRequest);
   
@@ -284,12 +447,16 @@ const createAuthorizationHeader = function(accessKeyId, date, region, serviceNam
     headers: headers
   });
   
+  console.log(JSON.stringify(headers));
+  
   try {
     const json = JSON.parse(res.responseText);
     console.log(JSON.stringify(json, undefined, 2));
   } catch (e) {
     console.log(e.message, res);
   }
+  
+  process.exit();
   
 })();
 </code></pre>
