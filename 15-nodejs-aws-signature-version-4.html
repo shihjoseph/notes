@@ -447,8 +447,6 @@ const createAuthorizationHeader = function(accessKeyId, date, region, serviceNam
     headers: headers
   });
   
-  console.log(JSON.stringify(headers));
-  
   try {
     const json = JSON.parse(res.responseText);
     console.log(JSON.stringify(json, undefined, 2));
