@@ -69,7 +69,7 @@
 
 <h2 id="un-compress--de-compress--extract-an-archive">Un-compress / De-compress / Extract an Archive</h2>
 
-<p>The following command will extract the contents of archive.tar.gz to the current directory.</p>
+<p>The following command will extract the contents of <code>archive.tar.gz</code> to the current directory.</p>
 
 <pre><code class="language-bash">tar -xzvf archive.tar.gz
 </code></pre>
@@ -80,6 +80,20 @@
 </code></pre>
 
 <p><code>-C</code> Extract to specific directory</p>
+
+<h1 id="compress-to-gzip-archive-gz">Compress to GZIP archive (.gz)</h1>
+
+<p>The following command will compress the contents of <code>archive.json</code> to the current directory and delete the existing file. The resulting file is <code>archive.json.gz</code>.</p>
+
+<pre><code class="language-bash">gzip archive.json
+</code></pre>
+
+<h1 id="de-compress-gzip-archive-gz">De-compress GZIP archive (.gz)</h1>
+
+<p>The following command will extract the contents of <code>archive.json.gz</code> to the current directory and delete the existing file. The resulting file is <code>archive.json</code>.</p>
+
+<pre><code class="language-bash">gzip -d archive.json.gz
+</code></pre>
 
 
 				</div>

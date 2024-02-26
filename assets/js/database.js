@@ -144,7 +144,7 @@ window.database = {
     "20-bash-compress-tar-html": {
       "title": "Bash - Tar and Un-tar (.tar.gz or .tgz)",
       "category": "",
-      "content": "Bash - Tar and Un-tar (.tar.gz or .tgz)CompressEntire Directory or a Single Filetar -czvf name-of-archive.tar.gz /path/to/directory-or-file-c Create an archive.-z Compress the archive with gzip.-v Verbose-f Specify the filename of the archive.Un-compress / De-compress / Extract an ArchiveThe following command will extract the contents of archive.tar.gz to the current directory.tar -xzvf archive.tar.gz-x This specifies you want to extract an archive instead of create one.tar -xzvf archive.tar.gz -C /tmp-C Extract to specific directory",
+      "content": "Bash - Tar and Un-tar (.tar.gz or .tgz)CompressEntire Directory or a Single Filetar -czvf name-of-archive.tar.gz /path/to/directory-or-file-c Create an archive.-z Compress the archive with gzip.-v Verbose-f Specify the filename of the archive.Un-compress / De-compress / Extract an ArchiveThe following command will extract the contents of archive.tar.gz to the current directory.tar -xzvf archive.tar.gz-x This specifies you want to extract an archive instead of create one.tar -xzvf archive.tar.gz -C /tmp-C Extract to specific directoryCompress to GZIP archive (.gz)The following command will compress the contents of archive.json to the current directory and delete the existing file. The resulting file is archive.json.gz.gzip archive.jsonDe-compress GZIP archive (.gz)The following command will extract the contents of archive.json.gz to the current directory and delete the existing file. The resulting file is archive.json.gzip -d archive.json.gz",
       "url": "/20-bash-compress-tar.html",
       "href": "/20-bash-compress-tar.html"
     }
