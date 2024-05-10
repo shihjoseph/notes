@@ -67,6 +67,79 @@ var buttonCopy = new ClipboardJS("input[type=\"button\"][data-copytext]", {
 });
 </code></pre>
 
+<p>Example usage:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;style&gt;
+		span.code {
+		  background-color: #eee;
+		  font-family: "Courier New";
+		  display: inline-block;
+		  padding: 18px 20px;
+		  margin: 8px 0;
+		  position: relative;
+		}
+		span.code span.copy {
+		  position: absolute;
+		  top: 0;
+		  right: 0;
+		  padding: 1px 6px;
+		  background-color: #ccc;
+		  color: #000;
+		}
+		span.code span.copy:hover,
+		span.code span.copy.copy-success,
+		span.code span.copy.copy-error {
+		  cursor: pointer;
+		  color: #fff;
+		  background-color: #2e215e;
+		}
+		span.code span.copy::after {
+		  content: "COPY";
+		  font-size: 10px;
+		  font-family: Arial, sans-serif;
+		}
+		span.code span.copy.copy-success::after {
+		  content: "COPIED!";
+		}
+		span.code span.copy.copy-error::after {
+		  content: "ERROR!";
+		}
+	&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;p&gt;&lt;span class="code"&gt;&lt;span class="copy"&gt;&lt;/span&gt;Text A&lt;/span&gt;&lt;/p&gt;
+	&lt;p&gt;&lt;span class="code"&gt;&lt;span class="copy"&gt;&lt;/span&gt;Text B&lt;/span&gt;&lt;/p&gt;
+	&lt;p&gt;&lt;span class="code"&gt;&lt;span class="copy"&gt;&lt;/span&gt;Text C&lt;/span&gt;&lt;/p&gt;
+	&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"&gt;&lt;/script&gt;
+	&lt;script&gt;
+	    // Initialize
+    	var buttonCopy = new ClipboardJS('span.code span.copy', {
+    	    // On trigger, return text from parent text content
+    		text: function(trigger) {
+    			return trigger.parentNode.textContent;
+    		}
+    	});
+    	// On success, temporarily change button text
+    	buttonCopy.on('success', function(e) {
+    		e.trigger.classList.add("copy-success");
+    		setTimeout(function() {
+    			e.trigger.classList.remove("copy-success");
+    		}, 2000);
+    	});
+    	// On success, temporarily change button text
+    	buttonCopy.on('error', function(e) {
+    		e.trigger.classList.add("copy-error");
+    		setTimeout(function() {
+    			e.trigger.classList.remove("copy-error");
+    		}, 2000);
+    	});
+	&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
 
 				</div>
 			</main>
