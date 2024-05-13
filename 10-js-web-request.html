@@ -70,7 +70,6 @@ const webRequest = async function(url, opt) {
   }
   const options = opt ? opt : {};
   const headers = options.headers ? options.headers : {};
-  headers["Content-length"] = options.body ? options.body.length : 0;
   return await new Promise(function(resolve, reject) {
     const xmlHttp = new _XmlHttp();
     xmlHttp.onreadystatechange = function() {
