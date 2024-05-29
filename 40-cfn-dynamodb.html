@@ -96,7 +96,7 @@
         Enabled: true
 </code></pre>
 
-<p>Example with secondary index (attr2 to attr1 is one-to-many)</p>
+<p>Example with hash key and secondary global index</p>
 
 <pre><code class="language-yaml">Resources:
   Table:
@@ -117,13 +117,17 @@
               KeyType: RANGE
           Projection:
             NonKeyAttributes:
-              - "fulfillmentUrl"
+              - "attr3"
             ProjectionType: INCLUDE
       KeySchema:
         - AttributeName: "attr1"
           KeyType: HASH
       TableName: !Sub "${AWS::StackName}-table"
 </code></pre>
+
+<p>See <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.CoreComponents.html#HowItWorks.CoreComponents.SecondaryIndexes">Secondary indexes</a> in the <em>Amazon DynamoDB Developer Guide</em>.</p>
+
+<p>See <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html">AWS::DynamoDB::Table</a> in the <em>AWS CloudFormation User Guide</em>.</p>
 
 
 				</div>
