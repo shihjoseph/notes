@@ -61,6 +61,16 @@ window.database = {
     ,
   
     
+    "15-nodejs-aws-assumerole-html": {
+      "title": "Node.js - Assume role examples within AWS JavaScript SDK Version 3",
+      "category": "",
+      "content": "Node.js - Assume role examples within AWS JavaScript SDK Version 3The following uses the CommonJS module system.const { STSClient, AssumeRoleCommand, GetCallerIdentityCommand } = require(\"@aws-sdk/client-sts\");exports.handler = async (event) =&gt; {  try {    const roleArn = 'arn:aws:iam::123456789012:role/yourCrossAccountRoleName'; // Replace with your role ARN    const roleSessionName = 'session1'; // Replace with your session name    // Assume the cross-account role    const stsClient = new STSClient({ region: 'us-east-1' });    const assumeRoleCommand = new AssumeRoleCommand({      RoleArn: roleArn,      RoleSessionName: roleSessionName,    });    const assumeRoleResponse = await stsClient.send(assumeRoleCommand);        // Print caller identity (https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/sts/command/GetCallerIdentityCommand/)    const assumedStsClient = new STSClient({      region: 'us-east-1',      credentials: {        accessKeyId: assumeRoleResponse.Credentials.AccessKeyId,        secretAccessKey: assumeRoleResponse.Credentials.SecretAccessKey,        sessionToken: assumeRoleResponse.Credentials.SessionToken      }    });    const getCallerIdentityResponse = await assumedStsClient.send(new GetCallerIdentityCommand({}));    console.log('Assumed identity:', getCallerIdentityResponse);  } catch (error) {    console.error('Error:', error);  }};The following uses the ECMAScript Modules (ESM) system.import { STSClient, AssumeRoleCommand, GetCallerIdentityCommand } from \"@aws-sdk/client-sts\";export const handler = async (event) =&gt; {  try {    const roleArn = 'arn:aws:iam::123456789012:role/yourCrossAccountRoleName'; // Replace with your role ARN    const roleSessionName = 'session1'; // Replace with your session name    // Assume the cross-account role    const stsClient = new STSClient({ region: 'us-east-1' });    const assumeRoleCommand = new AssumeRoleCommand({      RoleArn: roleArn,      RoleSessionName: roleSessionName,    });    const assumeRoleResponse = await stsClient.send(assumeRoleCommand);        // Print caller identity (https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/sts/command/GetCallerIdentityCommand/)    const assumedStsClient = new STSClient({      region: 'us-east-1',      credentials: {        accessKeyId: assumeRoleResponse.Credentials.AccessKeyId,        secretAccessKey: assumeRoleResponse.Credentials.SecretAccessKey,        sessionToken: assumeRoleResponse.Credentials.SessionToken      }    });    const getCallerIdentityResponse = await assumedStsClient.send(new GetCallerIdentityCommand({}));    console.log('Assumed identity:', getCallerIdentityResponse);  } catch (error) {    console.error('Error:', error);  }};",
+      "url": "/15-nodejs-aws-assumerole.html",
+      "href": "/15-nodejs-aws-assumerole.html"
+    }
+    ,
+  
+    
     "15-nodejs-aws-dynamodb-html": {
       "title": "Node.js - DynamoDB examples within async functions",
       "category": "",
