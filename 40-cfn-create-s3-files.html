@@ -147,7 +147,7 @@
     Type: Custom::Lambda
     Properties:
       ServiceToken: !GetAtt S3ContentCustomResource.Arn
-      BucketName: !Ref WebsiteS3Bucket
+      BucketName: !Ref S3Bucket
       Key: favicon.ico
       ContentType: "image/x-icon"
       IsBase64Encoded: true
