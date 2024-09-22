@@ -52,8 +52,8 @@ clipboard.on('success', function(e) {
   setTimeout(function() {
     e.trigger.setAttribute("value", e.trigger.getAttribute("data-value"));
   }, 1000);
-  
-  e.clearSelection();
+  // Don't keep focus on button
+  e.trigger.blur();
 });
 
 clipboard.on('error', function(e) {
@@ -67,4 +67,6 @@ clipboard.on('error', function(e) {
   setTimeout(function() {
     e.trigger.setAttribute("value", e.trigger.getAttribute("data-value"));
   }, 3000);
+  // Don't keep focus on button
+  e.trigger.blur();
 });
