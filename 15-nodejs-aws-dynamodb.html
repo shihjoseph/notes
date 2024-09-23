@@ -56,213 +56,228 @@
 
 <p>A simple <strong>get</strong> example within an <code>async</code> function.</p>
 
-<pre><code class="language-javascript">(async function() {
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, GetCommand } = require("@aws-sdk/lib-dynamodb");
+
+(async function() {
+  // Initialize the DynamoDB client
+  const client = new DynamoDBClient({ region: "us-east-1" });
   
-  const AWS = require("aws-sdk");
-  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
-  
+  // Create the Document Client from the DynamoDB client
+  const docClient = DynamoDBDocumentClient.from(client);
+
   let getResult;
   try {
-    
-    getResult = await documentClient.get({
+    // Prepare the GetCommand with ProjectionExpression and ExpressionAttributeNames
+    const command = new GetCommand({
       TableName: "TABLE_NAME",
       Key: {
-        "attr1": "val1",
-        "attr2": "val2"
+        attr1: "val1",
+        attr2: "val2"
       },
       ConsistentRead: false,
-      ReturnConsumedCapacity: "NONE"
-    }).promise();
-    
+      ReturnConsumedCapacity: "NONE",
+      ProjectionExpression: "#a1, #a2, #a3", // For filtering response items. Optional with ExpressionAttributeNames
+      ExpressionAttributeNames: { // Optional with ProjectionExpression
+        "#a1": "attr1",
+        "#a2": "attr2"
+      }
+    });
+
+    // Send the command using the document client
+    getResult = await docClient.send(command);
   } catch (e) {
-    
     console.error(`Could not get from DynamoDB: ${e.message}`);
     return;
-    
   }
-    
-  // Empty? (getResult = {})
+
+  // Check if the item is found
   if (!getResult || !getResult.Item) {
     console.log(`No item found:`, JSON.stringify(getResult));
     return;
   }
-  
-  // Print
+
+  // Print the retrieved attributes
   console.log(`attr1: ${getResult.Item["attr1"]} and attr2: ${getResult.Item["attr2"]}`);
-  
 })();
 </code></pre>
 
 <p>A simple <strong>scan</strong> example within an <code>async</code> function.</p>
 
-<pre><code class="language-javascript">(async function() {
-  
-  const AWS = require("aws-sdk");
-  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
-  
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, ScanCommand } = require("@aws-sdk/lib-dynamodb");
+
+// Create an instance of DynamoDBClient
+const client = new DynamoDBClient({ region: "us-east-1" });
+
+// Create a DocumentClient from the DynamoDB client
+const documentClient = DynamoDBDocumentClient.from(client);
+
+(async function() {
   let scanResult;
   try {
-    
-    scanResult = await documentClient.scan({
+    // Use the ScanCommand to scan the table
+    const command = new ScanCommand({
       TableName: "TABLE_NAME",
       Limit: 1000,
       ConsistentRead: false,
       ReturnConsumedCapacity: "NONE"
-    }).promise();
+    });
+
+    // Send the command
+    scanResult = await documentClient.send(command);
     
   } catch (e) {
-    
     console.error(`Could not get from DynamoDB: ${e.message}`);
     return;
-    
   }
   
-  // Empty?
-  if (!scanResult || !Array.isArray(scanResult.Items) || scanResult.Items.length == 0) {
+  // Check if the result is empty
+  if (!scanResult || !Array.isArray(scanResult.Items) || scanResult.Items.length === 0) {
     console.log(`No items in scan result:`, JSON.stringify(scanResult));
     return;
   }
   
-  // Print all
+  // Print all items
   for (const item of scanResult.Items) {
     console.log(`attr1: ${item["attr1"]} and attr2: ${item["attr2"]}`);
   }
-  
 })();
 </code></pre>
 
 <p>A simple <strong>query</strong> example within an <code>async</code> function.</p>
 
-<pre><code class="language-javascript">(async function() {
-  
-  const AWS = require("aws-sdk");
-  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
-  
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, QueryCommand } = require("@aws-sdk/lib-dynamodb");
+
+const client = new DynamoDBClient({ region: "us-east-1" });
+const docClient = DynamoDBDocumentClient.from(client);
+
+(async function() {
   let queryResult;
   try {
-    
-    queryResult = await documentClient.query({
+    const command = new QueryCommand({
       TableName: "TABLE_NAME",
       ConsistentRead: false,
       ExpressionAttributeNames: {
-        "#attr1": "attr1" // Assign attribute names to #varname
+        "#attr1": "attr1"
       },
       ExpressionAttributeValues: {
-        ":attr1": "val1" // Assign attribute value to :varname
+        ":attr1": "val1"
       },
-      KeyConditionExpression: "#attr1 = :attr1", // Use #varname and :varname
+      KeyConditionExpression: "#attr1 = :attr1",
       ProjectionExpression: "attr1,attr2",
       ReturnConsumedCapacity: "NONE",
       ScanIndexForward: false
-    }).promise();
-    
+    });
+
+    queryResult = await docClient.send(command);
   } catch (e) {
-    
     console.error(`Could not query DynamoDB: ${e.message}`);
     return;
-    
   }
-    
+
   // Empty?
-  if (!queryResult || !Array.isArray(queryResult.Items) || queryResult.Items.length == 0) {
+  if (!queryResult || !Array.isArray(queryResult.Items) || queryResult.Items.length === 0) {
     console.log(`No items in query result:`, JSON.stringify(queryResult));
     return;
   }
-  
+
   // Print all
   for (const item of queryResult.Items) {
     console.log(`attr1: ${item["attr1"]} and attr2: ${item["attr2"]}`);
   }
-  
+}
 })();
 </code></pre>
 
 <p>Another <strong>query</strong> example using a secondary index within an <code>async</code> function.</p>
 
-<pre><code class="language-javascript">(async function() {
-  
-  const AWS = require("aws-sdk");
-  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
-  
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, QueryCommand } = require("@aws-sdk/lib-dynamodb");
+
+const client = new DynamoDBClient({ region: "us-east-1" });
+const docClient = DynamoDBDocumentClient.from(client);
+
+(async function() {
   let queryResult;
   try {
-    
-    queryResult = await documentClient.query({
+    const command = new QueryCommand({
       TableName: "TABLE_NAME",
       IndexName: "INDEX_NAME",
       ConsistentRead: false,
       ExpressionAttributeNames: {
-        "#attr1": "attr1" // Assign attribute names to #varname
+        "#attr1": "attr1"
       },
       ExpressionAttributeValues: {
-        ":attr1": "val1" // Assign attribute value to :varname
+        ":attr1": "val1"
       },
-      KeyConditionExpression: "#attr1 = :attr1", // Use #varname and :varname
-      ProjectionExpression: "attr1,attr2",
+      KeyConditionExpression: "#attr1 = :attr1",
+      ProjectionExpression: "attr1, attr2",
       ReturnConsumedCapacity: "NONE",
       ScanIndexForward: false
-    }).promise();
-    
+    });
+
+    queryResult = await docClient.send(command);
+
   } catch (e) {
-    
     console.error(`Could not query DynamoDB: ${e.message}`);
     return;
-    
   }
-    
-  // Empty?
-  if (!queryResult || !Array.isArray(queryResult.Items) || queryResult.Items.length == 0) {
+
+  if (!queryResult || !Array.isArray(queryResult.Items) || queryResult.Items.length === 0) {
     console.log(`No items in query result:`, JSON.stringify(queryResult));
     return;
   }
-  
-  // Print all
+
   for (const item of queryResult.Items) {
-    console.log(`attr1: ${item["attr1"]} and attr2: ${item["attr2"]}`);
+    console.log(`attr1: ${item.attr1} and attr2: ${item.attr2}`); // Direct access without .S
   }
-  
 })();
 </code></pre>
 
 <p><strong>Single write</strong> example.</p>
 
-<pre><code class="language-javascript">(async function() {
-  
-  const AWS = require("aws-sdk");
-  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
-  
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { PutCommand } = require("@aws-sdk/lib-dynamodb");
+
+const client = new DynamoDBClient({ region: "us-east-1" });
+
+(async function() {
   try {
-    
-    await documentClient.put({
+    const command = new PutCommand({
       TableName: "TABLE_NAME",
       Item: {
         "attr1": "val1",
         "attr2": "val2"
       }
-    }).promise();
-      
+    });
+    
+    await client.send(command);
+    
     console.log("Saved to DynamoDB");
     
   } catch (e) {
-    
     console.error(`Could not save to DynamoDB: ${e.message}`);
-    return;
-    
   }
-  
 })();
 </code></pre>
 
 <p><strong>Batch write</strong> example.</p>
 
-<pre><code class="language-javascript">(async function() {
-  
-  const AWS = require("aws-sdk");
-  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
-  
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, BatchWriteCommand } = require("@aws-sdk/lib-dynamodb");
+
+// Create a DynamoDB client
+const client = new DynamoDBClient({ region: "us-east-1" });
+
+// Create a DynamoDB Document client
+const documentClient = DynamoDBDocumentClient.from(client);
+
+(async function() {
   try {
-    
-    await documentClient.batchWrite({
+    // Prepare the batch write command
+    const command = new BatchWriteCommand({
       RequestItems: {
         "TABLE_NAME": [
           {
@@ -292,30 +307,35 @@
       },
       ReturnConsumedCapacity: "NONE",
       ReturnItemCollectionMetrics: "NONE"
-    }).promise();
-      
+    });
+
+    // Send the batch write command
+    await documentClient.send(command);
+    
     console.log("Saved to DynamoDB");
     
   } catch (e) {
-    
     console.error(`Could not save to DynamoDB: ${e.message}`);
     return;
-    
   }
-  
 })();
 </code></pre>
 
 <p><strong>Single update</strong> example.</p>
 
-<pre><code class="language-javascript">(async function() {
-  
-  const AWS = require("aws-sdk");
-  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
-  
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
+
+// Initialize the DynamoDB Client
+const client = new DynamoDBClient({ region: "us-east-1" });
+
+// Create a DynamoDB Document Client
+const documentClient = DynamoDBDocumentClient.from(client);
+
+(async function() {
   try {
-    
-    await documentClient.update({
+    // Prepare the update command
+    const command = new UpdateCommand({
       TableName: "TABLE_NAME",
       Key: {
         "attr1": "val1",
@@ -329,29 +349,32 @@
         ':y' : 45,
         ':MAX' : 100,
       }
-    }).promise();
-      
+    });
+
+    // Send the update command
+    await documentClient.send(command);
     console.log("Saved to DynamoDB");
     
   } catch (e) {
-    
     console.error(`Could not save to DynamoDB: ${e.message}`);
     return;
-    
   }
-  
 })();
 </code></pre>
 
-<p><strong>Delete</strong> example</p>
-<pre><code class="language-javascript">(async function() {
-  
-  const AWS = require("aws-sdk");
-  const documentClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"}); // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
-  
+<p><strong>Delete</strong> example.</p>
+
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, DeleteCommand } = require("@aws-sdk/lib-dynamodb");
+
+// Initialize the DynamoDB client
+const client = new DynamoDBClient({ region: "us-east-1" });
+const documentClient = DynamoDBDocumentClient.from(client);
+
+(async function() {
   try {
-    
-    await documentClient.delete({
+    // Create a delete command
+    const command = new DeleteCommand({
       TableName: "TABLE_NAME",
       Key: {
         "attr1": "val1",
@@ -360,20 +383,19 @@
       ReturnConsumedCapacity: "NONE",
       ReturnItemCollectionMetrics: "NONE",
       ReturnValues: "NONE"
-    }).promise();
+    });
+
+    // Send the delete command
+    await documentClient.send(command);
       
     console.log("Deleted from DynamoDB");
     
   } catch (e) {
-    
     console.error(`Could not delete from DynamoDB: ${e.message}`);
     return;
-    
   }
-  
 })();
 </code></pre>
-
 
 
 				</div>
