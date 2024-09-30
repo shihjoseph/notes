@@ -236,6 +236,58 @@ const docClient = DynamoDBDocumentClient.from(client);
 })();
 </code></pre>
 
+<p><strong>Batch get</strong> example.</p>
+
+<pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, BatchGetCommand } = require("@aws-sdk/lib-dynamodb");
+
+(async function() {
+  // Initialize the DynamoDB client
+  const client = new DynamoDBClient({ region: "us-east-1" });
+  
+  // Create the Document Client from the DynamoDB client
+  const docClient = DynamoDBDocumentClient.from(client);
+
+  let batchGetResult;
+  try {
+    // Prepare the BatchGetCommand
+    const command = new BatchGetCommand({
+      RequestItems: {
+        "TABLE_NAME": {
+          Keys: [
+            { attr1: "val1", attr2: "val2" },
+            { attr1: "val3", attr2: "val4" }
+          ],
+          ProjectionExpression: "#a1, #a2",
+          ExpressionAttributeNames: {
+            "#a1": "attr1",
+            "#a2": "attr2"
+          }
+        }
+      },
+      ReturnConsumedCapacity: "NONE"
+    });
+
+    // Send the command using the document client
+    batchGetResult = await docClient.send(command);
+  } catch (e) {
+    console.error(`Could not batch get from DynamoDB: ${e.message}`);
+    return;
+  }
+
+  // Check if items are found
+  if (!batchGetResult || !batchGetResult.Responses || !batchGetResult.Responses["TABLE_NAME"]) {
+    console.log(`No items found:`, JSON.stringify(batchGetResult));
+    return;
+  }
+
+  // Print the retrieved attributes
+  batchGetResult.Responses["TABLE_NAME"].forEach(item =&gt; {
+    console.log(`attr1: ${item["attr1"]} and attr2: ${item["attr2"]}`);
+  });
+})();
+</code></pre>
+
 <p><strong>Single write</strong> example.</p>
 
 <pre><code class="language-javascript">const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
