@@ -62,7 +62,7 @@ const sendRequest = async function(url, opt) {
   headers["Content-length"] = opt.body ? opt.body.length : 0;
   const options = {
     hostname: parsedUrl.hostname,
-    port: opt.port ? opt.port : (parsedUrl.protocol == "https:" ? 443 : 80),
+    port: opt.port ? opt.port : (parsedUrl.port != null ? parseInt(parsedUrl.port) : (parsedUrl.protocol == "https:" ? 443 : 80)),
     path: parsedUrl.path,
     method: opt.method ? opt.method : "GET",
     headers: headers,
