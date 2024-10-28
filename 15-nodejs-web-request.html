@@ -77,13 +77,18 @@ const sendRequest = async function(url, opt) {
       });
       response.on("end", function() {
         completed = true;
-        response.responseText = responseText.join("");
+        response.responseText = Buffer.concat(responseText);
+        if (!opt.buffer) {
+          response.responseText = response.responseText.toString("utf-8");
+        }
         res(response);
       });
     });
     request.on("error", function(error) {
       completed = true;
-      console.error(`sendRequest Error: ${error.message}`);
+      if (!opt.silent) {
+        console.error(`sendRequest Error: ${error.message}`);
+      }
       err(error);
     });
     request.write(opt.body ? opt.body : "");
